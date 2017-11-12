@@ -1,8 +1,14 @@
+body{
+    background: pink;
+}
 h1, h4, li{
     text-transform: capitalize;
 }
 h1{
     color: rgb(62, 132, 202);
+}
+h4{
+    background: rgb(255, 100, 80);
 }
 li{
     color: rgb(0, 255, 200);
