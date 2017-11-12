@@ -1,5 +1,6 @@
 body{
-    background: pink;
+    background: url("../images/wood-grain-background.jpeg");
+    background-repeat: no-repeat;
 }
 h1, h4, li{
     text-transform: capitalize;
