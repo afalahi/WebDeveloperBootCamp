@@ -2,8 +2,8 @@ h1, h4, li{
     text-transform: capitalize;
 }
 h1{
-    color: purple;
+    color: rgb(62, 132, 202);
 }
 li{
-    color: orange;
+    color: rgb(0, 255, 200);
 }
