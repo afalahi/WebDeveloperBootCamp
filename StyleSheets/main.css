@@ -1,0 +1,9 @@
+h1, h4, li{
+    text-transform: capitalize;
+}
+h1{
+    color: purple;
+}
+li{
+    color: orange;
+}
