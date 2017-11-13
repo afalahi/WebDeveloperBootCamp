@@ -1,0 +1,35 @@
+.center{
+    width: 50%;
+    margin: 0 auto;
+}
+h1.center{
+    text-transform: capitalize;
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+#tictactoe td{
+    padding: 60px;
+}
+#no-top-border td{
+    border-bottom:2px solid black;
+    border-right: 2px solid black;
+}
+#no-top-border td:nth-of-type(3){
+    border-right: none;
+}
+#no-side-border td{
+    border-right: 2px solid black;
+}
+#no-side-border td:nth-of-type(3){
+    border-right: none;
+}
+
+#no-bottom-border td{
+    border-top: 2px solid black;
+    border-right: 2px solid black;
+}
+#no-bottom-border td:nth-of-type(3){
+    border-right: none;
+}
