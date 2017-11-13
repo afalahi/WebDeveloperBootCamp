@@ -1,3 +1,6 @@
+#tictactoe{
+    border-collapse: collapse;
+}
 .center{
     width: 50%;
     margin: 0 auto;
@@ -10,7 +13,8 @@ h1.center{
     font-weight: 700;
 }
 #tictactoe td{
-    padding: 60px;
+    width: 100px;
+    height: 100px;
 }
 #no-top-border td{
     border-bottom:2px solid black;
