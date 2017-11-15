@@ -1,3 +1,6 @@
+html{
+    height: 100%;
+}
 body{
     background-image: url("../images/cat-bg.jpg");
     background-size: cover;
@@ -5,23 +8,40 @@ body{
     background-repeat: no-repeat;
     font-family: 'Lato', sans-serif;
 }
+.navbar-default{
+    background-color: rgba(0, 0, 0, 0.5);
+    border-color: transparent;
+    border-radius: 0px;
+}
+
+.navbar-default .navbar-nav>li>a,.navbar-default .navbar-brand{
+    color: white;
+}
+.navbar-default .navbar-brand:hover{
+    color: white;
+    text-shadow:2px 4px 3px rgba(250, 249, 249, 0.4),
+                0px 8px 13px rgba(248, 247, 247, 0.1),
+                0px 18px 23px rgba(248, 247, 247, 0.1);
+}
 #content{
     padding-top: 25%;
 }
+#content .btn{
+    font-weight: bold;
+}
 h1,h3{
     color: white;
-    text-shadow: 1px 2px rgb(70, 70, 70);
+    text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.40),
+                 0px 8px 13px rgba(0, 0, 0,0.1),
+                 0px 18px 23px rgba(0, 0, 0,0.1);
 }
 h1{
-    font-size: 4em;
-    font-weight: bold;
+    font-size: 5em;
+    font-weight: 700;
 }
 h3{
     font-size: 2.0rem;
 }
 hr{
     width: 30%;
-}
-#conten .btn-default{
-    font-weight: bold;
 }
