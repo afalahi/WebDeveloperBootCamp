@@ -1,3 +1,27 @@
+body{
+    background-image: url("../images/cat-bg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: 'Lato', sans-serif;
+}
 #content{
-    text-align: center;
+    padding-top: 25%;
+}
+h1,h3{
+    color: white;
+    text-shadow: 1px 2px rgb(70, 70, 70);
+}
+h1{
+    font-size: 4em;
+    font-weight: bold;
+}
+h3{
+    font-size: 2.0rem;
+}
+hr{
+    width: 30%;
+}
+#conten .btn-default{
+    font-weight: bold;
 }
