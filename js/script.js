@@ -1,16 +1,4 @@
-var secretNumber = 7;
-
-var number=prompt("Guess the number");
-number = Number(number)
-if (number<secretNumber) {
-    alert("The number is too low");
-    console.log(number)
-} else if(number>secretNumber) {
-    alert("The number is too high");
+while (question!=="yeah"&&question!=="yes") {
+    var question=prompt("Are we there yet?");
 }
-else if (number===secretNumber){
-    alert("You guessed right!");
-}
-else{
-    alert("Wrong number!");
-}
+alert("Yay, we finally made it");
