@@ -1,5 +1,11 @@
 {
     "cSpell.words": [
         "bday"
+    ],
+    "spellright.language": "en",
+    "spellright.documentTypes": [
+        "markdown",
+        "latex",
+        "plaintext"
     ]
 }
