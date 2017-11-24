@@ -1,1 +1,1 @@
-document.getElementsByTagName("H1")
+var ID=document.getElementById("highlight");
