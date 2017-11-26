@@ -6,16 +6,18 @@ var p1Score=document.querySelector("#p1-score")
 var playerTwo=document.querySelector("#p2");
 var p2Points=0;
 var p2Score=document.querySelector("#p2-score")
+var gameOver=false;
 function addScore(player,points,score) {
+    var scoreLimit=document.querySelector("#score-limit").textContent
     player.addEventListener("click",function(){
-        var scoreLimit=document.querySelector("#score-limit").textContent
-        if(points<Number(scoreLimit)){
-            points++;
-            score.textContent=points
+        if(!gameOver){
+            points++;            
             if(Number(scoreLimit)===points){
+                gameOver=true
                 score.classList.add("green")
+            }
+            score.textContent=points
         }
-    }
     });
 }
 addScore(playerOne,p1Points,p1Score);
