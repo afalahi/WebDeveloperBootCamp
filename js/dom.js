@@ -1,1 +1,4 @@
-var ID=document.getElementById("highlight");
+var button=document.querySelector("button");
+button.addEventListener("click",function(){
+    document.body.classList.toggle("purple");
+});
