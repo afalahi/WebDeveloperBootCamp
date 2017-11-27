@@ -19,6 +19,13 @@ function addScore(player,points,score) {
             score.textContent=points
         }
     });
+    var reset=document.querySelector("#reset");
+    reset.addEventListener("click",function(){
+    score.textContent="0";
+    points=0;
+    score.classList.remove("green");
+    gameOver=false;
+    });
 }
 addScore(playerOne,p1Points,p1Score);
 addScore(playerTwo,p2Points,p2Score);
