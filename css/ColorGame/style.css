@@ -1,5 +1,5 @@
 /******* TAGS *******/
-body{
+body,html{
     background-color: #232323;
     margin: 0;
     padding: 0;
@@ -7,7 +7,8 @@ body{
 h1{
     color:white;
     text-align: center;
-    font-size: 2rem;
+    background-color:steelblue;
+    margin: 0;
 }
 /******* IDs *******/
 #container{
@@ -15,14 +16,10 @@ h1{
     max-width:600px;
     padding-top: 20px;
 }
-#header{
-    padding:50px;
-    margin: 0 auto;
-    background-color: rgb(33, 126, 180);
-}
+
 #toolBar{
     margin: 0 auto;
-    padding: 5px;
+    height: 30px;
     background-color: rgb(243, 235, 235);
     text-align: center;
 }
@@ -38,5 +35,8 @@ h1{
 .message{
     width: 50%;
     margin: 1.66%;
-    color: white;
+    color: black;
+}
+.selected{
+    background-color: blue
 }
