@@ -1,8 +1,8 @@
 //GLOBAL VARS
+var numSquares;
+var colors=[];
+var pickedColor;
 var squares=document.querySelectorAll(".square");
-var numSquares=squares.length;
-var colors=colorGenerator(numSquares);
-var pickedColor=colorPicker();
 var colorDisplay= document.querySelector("#colorDisplay");
 var messageDisplay=document.querySelector(".message");
 var resetButton=document.querySelector("#reset");
