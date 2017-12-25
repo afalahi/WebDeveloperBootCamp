@@ -1,16 +1,21 @@
 //GLOBAL VARS
-var numSquares=6;
-var colors=colorGenerator(numSquares);
 var squares=document.querySelectorAll(".square");
+var numSquares=squares.length;
+var colors=colorGenerator(numSquares);
 var pickedColor=colorPicker();
 var colorDisplay= document.querySelector("#colorDisplay");
 var messageDisplay=document.querySelector(".message");
 var resetButton=document.querySelector("#reset");
-var mode=document.querySelectorAll(".mode");
+var mode=document.querySelectorAll("button.mode");
 var modal = document.getElementById('myModal');
-var span = document.getElementsByClassName("close")[0];
-var body=document.body.onload=function(){ modal.style.display = "block"}
-//Functions
+var close = document.getElementsByClassName("close")[0];
+var selectDifficulty=document.querySelectorAll("#difficulty .mode");
+
+/*
+=====================
+Functions
+=====================
+*/
 //Color Changer
 function changeColors(color) {
     for (let i = 0; i < squares.length; i++) {
@@ -26,7 +31,7 @@ function colorPicker() {
 function colorGenerator(num) {
     var arr=[]
     for (let index = 0; index < num; index++) {
-        arr.push(randomColor());             
+        arr.push(randomColor());
     }
     function randomColor() {
         var red=Math.floor(Math.random() * 256);
@@ -36,50 +41,101 @@ function colorGenerator(num) {
     }
     return arr;
 }
+//Reset 
+function reset() 
+{
+    colors=colorGenerator(numSquares);
+    pickedColor=colorPicker();
+    colorDisplay.textContent=pickedColor;
+    for (let index = 0; index < squares.length; index++) 
+        {
+            if(colors[index])
+                {
+                    squares[index].style.backgroundColor=colors[index];
+                    squares[index].style.display="block";
+                } 
+            else
+                {
+                    squares[index].style.display="none";
+                }
+        }
+    document.querySelector("h1").style.backgroundColor="steelblue";
+    messageDisplay.textContent="";
+}
+/*
+===================
+End of Functions
+===================
+*/
+//on page load show modal and select difficulty
+document.body.onload=function()
+    { 
+        modal.style.display = "block";
+        for (let index = 0; index < squares.length; index++) 
+        {
+            squares[index].style.display="none";
+        }
+    }
+for (let index = 0; index < selectDifficulty.length; index++) {
+    selectDifficulty[index].addEventListener("click", function(){
+        modal.style.display = "none";
+        if(this.textContent==="Easy")
+            {
+                numSquares=3;
+                reset();
+            }
+        else if (this.textContent==="Medium")
+            {
+                numSquares=6;
+                reset();
+            }
+        else
+            {
+                numSquares=9;
+                reset();
+            }
+    });
+    
+}
+// When the user clicks on <span> (x), close the modal
+close.onclick = function() {
+    modal.style.display = "none";
+}
+//Sets the picked color on header
 colorDisplay.textContent=pickedColor;
-
-for (let i = 0; i < squares.length; i++) {
-    //sets initial colors
-    squares[i].style.backgroundColor=colors[i];
+//game logic
+for (let i = 0; i < squares.length; i++) 
+{
     //add event listeners to squares
-    squares[i].addEventListener("click",function(){
+    squares[i].addEventListener("click",function()
+    {
         var clickedColor=this.style.backgroundColor;
-        if (clickedColor===pickedColor) {
+        if (clickedColor===pickedColor) 
+        {
             messageDisplay.textContent="Correct!";
             resetButton.textContent="Play Again?"
             changeColors(clickedColor);
-            document.querySelector("#header").style.backgroundColor=clickedColor;
+            document.querySelector("h1").style.backgroundColor=clickedColor;
         }
-        else{
+        else
+        {
             this.style.backgroundColor="#232323";
             messageDisplay.textContent="Try Again!";
         }
     });
 }
-resetButton.addEventListener("click",function(){
-    colors=colorGenerator(numSquares);
-    pickedColor=colorPicker();
-    colorDisplay.textContent=pickedColor;
-    for (let i = 0; i < squares.length; i++) {
-        //sets initial colors
-        squares[i].style.backgroundColor=colors[i];
-    }
-    document.querySelector("h1").style.backgroundColor="steelblue";
-    messageDisplay.textContent="";
-    this.textContent="New Colors"
-});
-
+//reset colors
+resetButton.addEventListener("click", function(){
+    reset();
+    this.textContent="New Colors";
+})
 for (let index = 0; index < mode.length; index++) {
     mode[index].addEventListener("click", function () {
         this.classList.add("selected");
     });
-    
+
 }
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    modal.style.display = "none";
-}
 
 // When the user clicks anywhere outside of the modal, close it
 // window.onclick = function(event) {
