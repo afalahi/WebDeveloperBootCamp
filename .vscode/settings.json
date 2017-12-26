@@ -1,6 +1,34 @@
 {
-    "cSpell.words": [
-        "bday",
+    "files.autoSave": "afterDelay",
+    "git.enableSmartCommit": true,
+    "cSpell.userWords": [
+        "minimap",
+        "steelblue",
         "todos"
-    ]
+    ],
+    "editor.minimap.enabled": false,
+    "cSpell.enabledLanguageIds": [
+        "c",
+        "cpp",
+        "csharp",
+        "go",
+        "handlebars",
+        "javascript",
+        "javascriptreact",
+        "json",
+        "latex",
+        "markdown",
+        "php",
+        "plaintext",
+        "python",
+        "restructuredtext",
+        "text",
+        "typescript",
+        "typescriptreact",
+        "yml"
+    ],
+    "git.autofetch": true,
+    "workbench.iconTheme": "vscode-icons",
+    "explorer.confirmDragAndDrop": false,
+    "workbench.colorTheme": "Ayu Dark"
 }
