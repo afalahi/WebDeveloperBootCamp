@@ -146,6 +146,7 @@ resetButton.addEventListener("click", function()
         reset();
         this.textContent="New Colors";
     })
+//Change difficulty
 for (let index = 0; index < mode.length; index++) 
     {
         mode[index].addEventListener("click", function () 
