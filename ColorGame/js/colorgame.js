@@ -8,7 +8,6 @@ var messageDisplay=document.querySelector(".message");
 var resetButton=document.querySelector("#reset");
 var mode=document.querySelectorAll("button.mode");
 var modal = document.getElementById('myModal');
-var close = document.getElementsByClassName("close")[0];
 var selectDifficulty=document.querySelectorAll("#difficulty .mode");
 /*
 =====================
@@ -107,19 +106,11 @@ for (let index = 0; index < selectDifficulty.length; index++)
     {
         selectDifficulty[index].addEventListener("click", function()
             {
-                modal.style.display = "none";
+                $("#myModal").fadeOut(1000);
                 difficulty(this,index);
             });
         
     }
-// When the user clicks on <span> (x), close the modal
-$(".close").on("click", function () {
-    $(".close").fadeOut();
-})
-// close.onclick = function() 
-//     {
-//         modal.style.display = "none";
-//     }
 //Sets the picked color on header
 colorDisplay.textContent=pickedColor;
 //game logic
