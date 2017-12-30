@@ -1,3 +1,4 @@
+jQuery(document).ready(function($) {
 //toggle input
 $("#add-new").on("click", function(){
     $("input[type='text'").slideToggle("slow");
@@ -21,5 +22,4 @@ $("#todoList").on("click", ".delete", function(event){
     });
     event.stopPropagation();
 });
-
-
+});
