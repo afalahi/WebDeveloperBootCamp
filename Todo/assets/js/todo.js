@@ -8,7 +8,7 @@ $("input[type='text']").on("keypress", function(event){
     var newTodo = $(this).val(); 
     newTodo = newTodo.charAt(0).toUpperCase() + newTodo.slice(1);
     $(this).val(newTodo);
-    if(event.which===13){
+    if(event.which===13 && newTodo.length!==0){
        $(this).val("");
        $("ul").append("<li><span class='delete'><span class='fal fa-trash-alt'></span></span> "+newTodo+"</li>");
     }
