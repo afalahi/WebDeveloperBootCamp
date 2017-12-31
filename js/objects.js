@@ -22,4 +22,4 @@ movies.forEach(function(movie){
     else{
         console.log("You have not watched " + movie.title+" - "+movie.rating+" stars")
     }
-})
+});
