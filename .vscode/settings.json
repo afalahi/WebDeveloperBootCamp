@@ -30,5 +30,5 @@
     "git.autofetch": true,
     "workbench.iconTheme": "vscode-icons",
     "explorer.confirmDragAndDrop": false,
-    "workbench.colorTheme": "Ayu Dark"
+    "workbench.colorTheme": "Atom Material Theme"
 }

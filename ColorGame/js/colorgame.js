@@ -41,7 +41,7 @@ function colorGenerator(num)
                 var red=Math.floor(Math.random() * 256);
                 var green=Math.floor(Math.random() * 256);
                 var blue=Math.floor(Math.random() * 256);
-                return "rgb("+red+", "+green+", "+blue+")"
+                return "rgb("+red+", "+green+", "+blue+")";
             }
         return arr;
     }
@@ -101,7 +101,7 @@ document.body.onload=function()
         {
             squares[index].style.display="none";
         }
-    }
+    };
 for (let index = 0; index < selectDifficulty.length; index++) 
     {
         selectDifficulty[index].addEventListener("click", function()
@@ -139,7 +139,7 @@ resetButton.addEventListener("click", function()
     {
         reset();
         this.textContent="New Colors";
-    })
+    });
 //Change difficulty
 for (let index = 0; index < mode.length; index++) 
     {
