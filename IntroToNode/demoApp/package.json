@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/express": "^4.11.0",
     "@types/faker": "^4.1.2",
     "body-parser": "^1.18.2",
     "cat-me": "^1.0.3",
