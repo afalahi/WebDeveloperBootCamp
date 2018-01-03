@@ -30,5 +30,8 @@
     "git.autofetch": true,
     "workbench.iconTheme": "vscode-icons",
     "explorer.confirmDragAndDrop": false,
-    "workbench.colorTheme": "Atom Material Theme"
+    "workbench.colorTheme": "Atom Material Theme",
+    "cSpell.words": [
+        "esversion"
+    ]
 }
