@@ -32,6 +32,7 @@
     "explorer.confirmDragAndDrop": false,
     "workbench.colorTheme": "Atom Material Theme",
     "cSpell.words": [
-        "esversion"
+        "esversion",
+        "uncomment"
     ]
 }

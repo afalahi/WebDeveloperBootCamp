@@ -7,5 +7,8 @@
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
-  </body>
+    <form action="/results" method="get">
+        <input type="text" placeholder="movie search" name="search">
+        <input type="submit">
+    </form>
 </html>
