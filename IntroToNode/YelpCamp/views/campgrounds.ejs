@@ -1,13 +1,14 @@
 <% include layouts/header %>
-<div class="container">
-    <h1>This is the campgrounds</h1>
     <div class="row">
         <% campgrounds.forEach(function(campground){ %>
-            <div class="col-md-4">
-                <h4> <%= campground.name %> </h4>
-                <img class=".center-block img-thumbnail" src="<%= campground.image %>" alt="<%= campground.name %>">
+            <div class="col-md-4 col-sm-6">
+                <div class="thumbnail">
+                    <img src="<%= campground.image %>" alt="<%= campground.name %>">
+                    <div class="caption">
+                        <h4> <%= campground.name %> </h4>
+                    </div>
+                </div>
             </div>
         <% }) %>
     </div>
-</div>
 <% include layouts/footer %>
