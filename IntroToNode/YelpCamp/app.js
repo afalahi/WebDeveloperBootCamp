@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var landing = require('./routes/landing');
 var users = require('./routes/users');
 var campgrounds = require('./routes/campgrounds');
+var newCampgrounds = require('./routes/new');
 
 var app = express();
 
@@ -19,16 +20,18 @@ app.set('view engine', 'ejs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/public')));
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
 app.use('/js/lib', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
-app.use('/styles', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect css bootstrap
+app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect css bootstrap
 
+//Routes
 app.use('/', landing);
 app.use('/users', users);
 app.use('/campgrounds', campgrounds);
+app.use('/campgrounds/new', newCampgrounds);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

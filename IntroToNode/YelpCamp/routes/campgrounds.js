@@ -1,5 +1,6 @@
-var express = require('express');
-var router = express.Router();
+/*jshint esversion:6 */
+const express = require('express');
+const router = express.Router();
 
 //Get camp grounds
 router.get("/", function(req, res, next){
@@ -18,6 +19,11 @@ router.get("/", function(req, res, next){
         }
     ];
     res.render("campgrounds", {campgrounds: campgrounds, title:'Campgrounds'});
+});
+
+router.post("/", function(req, res, next){
+    let name = req.body.name;
+    let image = req.body.image;
 });
 
 module.exports = router;
