@@ -33,8 +33,10 @@
     "workbench.colorTheme": "Atom Material Theme",
     "cSpell.words": [
         "esversion",
+        "fileupload",
         "mimetype",
         "oxon",
-        "uncomment"
+        "uncomment",
+        "yelpcamp"
     ]
 }

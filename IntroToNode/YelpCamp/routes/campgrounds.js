@@ -62,4 +62,14 @@ router.post("/", function(req, res, next){
       });
 });
 
+router.get("/new", function(req, res, next){
+    res.render("newCampgrounds", 
+    {
+        title:'New Camp',
+        caption:'Add New Campgrounds',
+        link: '/campgrounds',
+        linkCaption: 'Back to Campgrounds'
+    });
+});
+
 module.exports = router;
