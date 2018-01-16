@@ -1,24 +1,16 @@
 {
-  "name": "yelpcamp",
+  "name": "blog",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "@types/bootstrap": "^3.3.36",
-    "@types/ejs": "^2.5.0",
-    "@types/jquery": "^3.2.18",
     "body-parser": "~1.18.2",
-    "bootstrap": "^3.3.7",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "ejs": "~2.5.7",
     "express": "~4.15.5",
-    "express-fileupload": "^0.3.0",
-    "helmet": "^3.9.0",
-    "jquery": "^3.2.1",
-    "mongoose": "^5.0.0-rc2",
     "morgan": "~1.9.0",
     "serve-favicon": "~2.4.5"
   }
