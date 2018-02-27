@@ -29,6 +29,16 @@ router.get("/", function(req, res, next){
         }
     });
 });
+//Display form for adding new campground
+router.get("/new", function(req, res, next){
+    res.render("newCampgrounds", 
+    {
+        title:'New Camp',
+        caption:'Add New Campgrounds',
+        link: '/campgrounds',
+        linkCaption: 'Back to Campgrounds'
+    });
+});
 //create new camp
 router.post("/", function(req, res, next){
     if (!req.files) {
@@ -74,17 +84,7 @@ router.post("/", function(req, res, next){
         
       });
 });
-//Display form for adding new campground
-router.get("/new", function(req, res, next){
-    res.render("newCampgrounds", 
-    {
-        title:'New Camp',
-        caption:'Add New Campgrounds',
-        link: '/campgrounds',
-        linkCaption: 'Back to Campgrounds'
-    });
-});
-
+//Show camp
 router.get("/:id", function(req, res){
     Campground.findById(req.params.id, function(err, result){
         if (err) {

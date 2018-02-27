@@ -1,8 +1,6 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+i.icon {
+  font-size: 2em;
 }
-
-a {
-  color: #00B7FF;
+.container.main {
+  margin-top:7.0em;
 }
