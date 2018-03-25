@@ -1,14 +1,14 @@
 <% include ./layouts/header %>
 <div class="ui main text container segment">
     <div class="ui huge header">New Blog</div>
-    <form class="ui form" action="/blogs" method="POST">
+    <form class="ui form" action="/blogs" method="POST" enctype="multipart/form-data">
         <div class="field">
             <label>Title</label>
             <input type="text" name="blog[title]" placeholder="title">
         </div>
         <div class="field">
             <label>Image</label>
-            <input type="text" name="blog[image]" placeholder="image">
+            <input type="file" name="image" placeholder="image">
         </div>
         <div class="field">
             <label>Content</label>
