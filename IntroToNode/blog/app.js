@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const sanitizer = require('express-sanitizer');
-
 const db = require('./config/db');
 
 const app = express();
@@ -20,7 +19,7 @@ app.set('view engine', 'ejs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
-//app.use(bodyParser.json());
+app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride("_method"));

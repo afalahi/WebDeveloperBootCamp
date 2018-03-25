@@ -9,11 +9,12 @@
             </div>
             <div class="description">
                 <p><%= blog.body %></p>
+                <br>
             </div>
         </div>
     </div>
-    <a href="/blogs/<%=blog._id%>/edit" class="ui blue basic button">Edit</a>
-    <form action="/blogs/<%=blog._id %>?_method=DELETE" method="post">
+    <a href="/blogs/<%=blog._id%>/edit" class="ui orange basic button">Edit</a>
+    <form style="display:inline;" action="/blogs/<%=blog._id %>?_method=DELETE" method="post">
         <button class="ui red basic button">Delete</button>
     </form>
 </div>
