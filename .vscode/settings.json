@@ -35,6 +35,7 @@
         "esversion",
         "fileupload",
         "mimetype",
+        "originalname",
         "oxon",
         "uncomment",
         "yelpcamp"
