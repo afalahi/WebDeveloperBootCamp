@@ -1,0 +1,22 @@
+<% include ./layouts/header %>
+<div class="ui main text container segment">
+    <div class="ui huge header">Edit <%=blog.title%></div>
+    <form class="ui form" action="/blogs/<%=blog._id%>?_method=PUT" method="POST" enctype="multipart/form-data">
+        <div class="field">
+            <label>Title</label>
+            <input type="text" name="blog[title]" placeholder="title" value="<%=blog.title%>">
+        </div>
+        <div class="field">
+            <label>Image</label>
+            <img class="ui centered rounded image" src="<%= blog.image%>">
+            <br>         
+            <input type="file" name="image" placeholder="image" value="<%=blog.image%>">
+        </div>
+        <div class="field">
+            <label>Content</label>
+            <textarea name="blog[body]" cols="30" rows="10"><%=blog.body%></textarea>         
+        </div>
+        <input class="ui violet basic button" type="submit">
+    </form>
+</div>
+<% include ./layouts/footer %>
