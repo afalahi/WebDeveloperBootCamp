@@ -6,7 +6,7 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
-const mongoose = require('mongoose');
+const database = require('./config/database');
 const app = express();
 
 // view engine setup
@@ -27,13 +27,6 @@ app.use(fileUpload());
 
 //Use Routes from /routes/index.js
 app.use(require('./routes'));
-
-//Database connection
-const dbUrl = 'mongodb://localhost:27017/YelpCamp';
-const mongoDB = process.env.MONGODB_URI || dbUrl;
-mongoose.connect(mongoDB);
-const conn = mongoose.connection;
-conn.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

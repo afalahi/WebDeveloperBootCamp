@@ -1,22 +1,12 @@
 /*jshint esversion:6 */
 const express = require('express');
 const router = express.Router();
-const mongoose= require('mongoose');
-const Schema = mongoose.Schema;
-
-//Camp Model
-const campSchema = new Schema({
-    name: {type: String, required: true},
-    image: String,
-    description: String
-});
-const Campground = mongoose.model('Campground', campSchema);
-
+const Campground = require('../models/campModel');
 //Get camp grounds
-router.get("/", function(req, res, next){
+router.get("/", function(req, res){
     Campground.find({}, function(err, result){
         if(err) {
-            console.log(err);
+            throw err;
         } 
         else {
             res.render("campgrounds", {
@@ -30,7 +20,7 @@ router.get("/", function(req, res, next){
     });
 });
 //Display form for adding new campground
-router.get("/new", function(req, res, next){
+router.get("/new", function(req, res){
     res.render("newCampgrounds", 
     {
         title:'New Camp',
@@ -40,7 +30,7 @@ router.get("/new", function(req, res, next){
     });
 });
 //create new camp
-router.post("/", function(req, res, next){
+router.post("/", function(req, res){
     if (!req.files) {
         return res.status(400).send('No files were uploaded.');
     }

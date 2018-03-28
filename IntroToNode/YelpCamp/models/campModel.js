@@ -1,11 +1,11 @@
 /*jshint esversion:6*/
-const mongoose= require('mongoose');
-const Schema = mongoose.Schema;
+const database= require('../config/database');
 
-const campSchema = new Schema({
-    name: {type: String, required: true},
-    imagePath: String,
+const campSchema = new database.Schema({
+    name: {
+        type: String, 
+        required: true
+    },
+    image: String,
 });
-
-const Camp = mongoose.model('Camp', campSchema);
-module.exports = Camp;
+module.exports = database.model('campgrounds', campSchema);;

@@ -7,7 +7,7 @@ router.use('/users', require('./users'));
 router.use('/campgrounds', require('./campgrounds'));
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function(req, res) {
   res.render('index', 
   {
     title: 'Yelp Camp',
