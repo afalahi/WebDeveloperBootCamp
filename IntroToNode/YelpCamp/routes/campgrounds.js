@@ -1,7 +1,7 @@
 /*jshint esversion:6 */
 const express = require('express');
 const router = express.Router();
-const Campground = require('../models/campModel');
+const Campground = require('../models/campgrounds-model');
 //Get camp grounds
 router.get("/", function(req, res){
     Campground.find({}, function(err, result){
