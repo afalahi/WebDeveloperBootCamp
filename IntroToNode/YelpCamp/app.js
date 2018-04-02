@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 const database = require('./config/database');
+const seedDB = require('./seeds');
 const app = express();
 
 // view engine setup
@@ -27,7 +28,7 @@ app.use(fileUpload());
 
 //Use Routes from /routes/index.js
 app.use(require('./routes'));
-
+ seedDB();
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   let err = new Error('Not Found');

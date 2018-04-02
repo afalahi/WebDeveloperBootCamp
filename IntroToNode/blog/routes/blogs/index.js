@@ -44,7 +44,7 @@ router.post("/blogs", upload.single('image') , function(req, res){
 		if(err){
 			res.render("new", {title: "New Blog"})
 		} else {
-			res.redirect("/blogs");
+			res.redirect("/blogs/"+newBlog._id);
 		}
 	});
 });

@@ -1,11 +1,18 @@
 /*jshint esversion:6*/
-const database= require('../config/database');
+const db = require('../config/database');
 
-const campSchema = new database.Schema({
+const campSchema = new db.Schema({
     name: {
         type: String, 
         required: true
     },
     image: String,
+    description: String,
+    comments: [
+        {
+            type: db.Schema.Types.ObjectId,
+            ref: "Comment"
+        }
+    ]
 });
-module.exports = database.model('campgrounds', campSchema);;
+module.exports = db.model('Campground', campSchema);;
