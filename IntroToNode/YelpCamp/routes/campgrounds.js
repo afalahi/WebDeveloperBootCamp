@@ -76,7 +76,7 @@ router.post("/", function(req, res){
 });
 //Show camp
 router.get("/:id", function(req, res){
-    Campground.findById(req.params.id, function(err, result){
+    Campground.findById(req.params.id).populate("comments").exec(function(err, result){
         if (err) {
             console.log(err);
         }
@@ -92,5 +92,5 @@ router.get("/:id", function(req, res){
         }
     });
     
-})
+});
 module.exports = router;

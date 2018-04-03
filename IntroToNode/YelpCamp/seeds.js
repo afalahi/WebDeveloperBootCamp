@@ -5,17 +5,17 @@ const Comment = require('./models/comment-model');
 const data = [
     {
         name: "Cloud Rest",
-        image: "./images/MountVernon.jpeg",
+        image: "/images/MountVernon.jpeg",
         description:"A business big enough that it could be listed on the NASDAQ goes belly up. Disappears! It ceases to exist without me. No, you clearly don't know who you're talking to, so let me clue you in. I am not in danger, Skyler. I AM the danger! A guy opens his door and gets shot and you think that of me? No. I am the one who knocks!"
     },    
     {
         name: "Desert Mesa",
-        image: "./images/FortHuntPark.jpeg",
+        image: "/images/FortHuntPark.jpeg",
         description:"A business big enough that it could be listed on the NASDAQ goes belly up. Disappears! It ceases to exist without me. No, you clearly don't know who you're talking to, so let me clue you in. I am not in danger, Skyler. I AM the danger! A guy opens his door and gets shot and you think that of me? No. I am the one who knocks!"
     },
     {
         name: "Canyon Floor",
-        image: "./images/OxonCovePark.jpeg",
+        image: "/images/OxonCovePark.jpeg",
         description:"A business big enough that it could be listed on the NASDAQ goes belly up. Disappears! It ceases to exist without me. No, you clearly don't know who you're talking to, so let me clue you in. I am not in danger, Skyler. I AM the danger! A guy opens his door and gets shot and you think that of me? No. I am the one who knocks!"
     }
 ]
