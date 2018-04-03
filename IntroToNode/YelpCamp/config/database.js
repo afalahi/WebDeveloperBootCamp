@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
-
-mongoose.connect('mongodb://localhost:27017/YelpCamp', function(err){
+const dbUri = process.env.MLAB_URI,
+      dbUser = process.env.DB_USER,
+      dbPass=process.env.DB_PASS
+mongoose.connect('mongodb://'+dbUser+':'+dbPass+'@'+dbUri+'/yelpcamp', function(err){
     if(err){
         throw err.message;
     }
