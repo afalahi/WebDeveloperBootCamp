@@ -1,5 +1,5 @@
 /*jshint esversion:6 */
-const router = require('express').Router();;
+const router = require('express').Router();
 const Campground = require('../models/campground');
 const Comment = require('../models/comment');
 
@@ -92,11 +92,32 @@ router.get("/:id", function(req, res){
 //New Comment
 router.get('/:id/comments/new', (req, res)=>{
     res.render('comments/new' , {
+        id: req.params.id,
         title:"Add new comment",
         caption: "Add comment",
         link: "/campgrounds",
         linkCaption: "Back to Campgrounds"
 
     });
+});
+//Post Comment
+router.post('/:id/comments', (req, res)=>{
+    return Comment
+        .create(req.body.comment)
+        .then( comment => {
+            return Campground
+                .findById(req.params.id)
+                .then(campground =>{
+                    campground.comments.push(comment);
+                    campground.save();
+                    res.redirect('/campgrounds/'+req.params.id)
+                })
+                .catch(err =>{
+                    throw err;
+                });
+        })
+        .catch(err =>{
+            throw err;
+        });
 });
 module.exports = router;
