@@ -1,6 +1,6 @@
 const db = require('./config/database');
-const Campground = require('./models/campgrounds-model');
-const Comment = require('./models/comment-model');
+const Campground = require('./models/campground');
+const Comment = require('./models/comment');
 
 const data = [
     {

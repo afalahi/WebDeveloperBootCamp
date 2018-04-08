@@ -1,7 +1,8 @@
 /*jshint esversion:6 */
-const express = require('express');
-const router = express.Router();
-const Campground = require('../models/campgrounds-model');
+const router = require('express').Router();;
+const Campground = require('../models/campground');
+const Comment = require('../models/comment');
+
 //Get camp grounds
 router.get("/", function(req, res){
     Campground.find({}, function(err, result){
@@ -9,7 +10,7 @@ router.get("/", function(req, res){
             throw err;
         } 
         else {
-            res.render("campgrounds", {
+            res.render("campgrounds/index", {
                 campgrounds: result, 
                 title:'Campgrounds',
                 caption:'View our amazing campgrounds from all over the world',
@@ -21,7 +22,7 @@ router.get("/", function(req, res){
 });
 //Display form for adding new campground
 router.get("/new", function(req, res){
-    res.render("newCampgrounds", 
+    res.render("campgrounds/new", 
     {
         title:'New Camp',
         caption:'Add New Campgrounds',
@@ -39,7 +40,6 @@ router.post("/", function(req, res){
     let desc = req.body.description;
     let imageName = hasWhiteSpace(name);
     let ext = "."+image.mimetype.split("/")[1];
-
     //check for white space in name
     function hasWhiteSpace(str) {
         let whiteSpace = /\s/g.test(str);
@@ -50,7 +50,6 @@ router.post("/", function(req, res){
         return str;
       }
     // imageName = hasWhiteSpace(imageName);
-
     let path = './public/images/'+imageName+ext;
     image.mv(path, function(err) {
         if (err){
@@ -66,8 +65,6 @@ router.post("/", function(req, res){
                 console.log(err);
             } 
             else {
-                console.log("newly created campground");
-                console.log(result);
                 res.redirect("/campgrounds");
             }
         });
@@ -81,7 +78,7 @@ router.get("/:id", function(req, res){
             console.log(err);
         }
         else {
-            res.render("CampView", {
+            res.render("campgrounds/show", {
                 campground:result,
                 title:result.name,
                 caption: "You're currently viewing "+result.name,
@@ -91,6 +88,15 @@ router.get("/:id", function(req, res){
             });
         }
     });
-    
+});
+//New Comment
+router.get('/:id/comments/new', (req, res)=>{
+    res.render('comments/new' , {
+        title:"Add new comment",
+        caption: "Add comment",
+        link: "/campgrounds",
+        linkCaption: "Back to Campgrounds"
+
+    });
 });
 module.exports = router;
