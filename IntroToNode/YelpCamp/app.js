@@ -6,7 +6,6 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const fileUpload = require('express-fileupload');
 const database = require('./config/database');
 const seedDB = require('./seeds');
 const app = express();
@@ -25,7 +24,6 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
 app.use('/js/lib', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect css bootstrap
-app.use(fileUpload());
 
 //Use Routes from /routes/index.js
 app.use(require('./routes'));
