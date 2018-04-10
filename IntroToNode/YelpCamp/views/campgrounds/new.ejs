@@ -4,16 +4,16 @@
                     <form class="form" action="/campgrounds" method="post" encType="multipart/form-data">
                         <div class="form-group">
                             <label for="campName">Name</label>
-                            <input type="text" class="form-control" id="campName" placeholder="Camp Name" name="campName">
+                            <input type="text" class="form-control" id="name" placeholder="Campground Name" name="campground[name]">
                         </div>
                         <div class="form-group">
                             <label for="campImage">Image</label>
-                            <input type="file" id="campImage" name="campImage">
-                            <p class="help-block">Upload camp image.</p>
+                            <input type="file" id="image" name="image">
+                            <p class="help-block">Upload campground image.</p>
                         </div>
                         <div class="form-group">
                                 <label for="desc">Description</label>
-                                <textarea class="form-control" name="description" id="desc" cols="30" rows="5" placeholder="Tells us more about this campgrounds"></textarea>
+                                <textarea class="form-control" name="campground[description]" id="description" cols="30" rows="5" placeholder="Tells us more about this campgrounds"></textarea>
                             </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
