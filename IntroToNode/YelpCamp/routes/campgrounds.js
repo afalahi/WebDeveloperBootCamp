@@ -2,92 +2,77 @@
 const router = require('express').Router();
 const Campground = require('../models/campground');
 const Comment = require('../models/comment');
+const multer = require('multer');
+//MULTER CONFIG
+const storage = multer.diskStorage(
+	{  
+		destination: function (req, file, cb) {
+			cb(null, './public/images')
+		},
+		filename: function(req, file, callback) {
+			callback(null,Date.now()+'-'+file.originalname);
+		}
+	}
+);
+const upload = multer({storage:storage});
 
 //Get camp grounds
-router.get("/", function(req, res){
-    Campground.find({}, function(err, result){
-        if(err) {
-            throw err;
-        } 
-        else {
-            res.render("campgrounds/index", {
-                campgrounds: result, 
-                title:'Campgrounds',
-                caption:'View our amazing campgrounds from all over the world',
-                link: '/campgrounds/new',
-                linkCaption: 'Add new campgrounds'
-            });
-        }
+router.get("/", (req, res) =>{
+    return Campground
+        .find({})
+        .then(result => {
+        res.render("campgrounds/index", {
+            campgrounds: result, 
+            title:'Campgrounds',
+            caption:'View our amazing campgrounds from all over the world',
+            link: req.baseUrl+'/new',
+            linkCaption: 'Add new campgrounds',
+            cache:true
+        });
+    })
+    .catch(err =>{
+        throw err;
     });
 });
 //Display form for adding new campground
-router.get("/new", function(req, res){
+router.get("/new", (req, res) => {
     res.render("campgrounds/new", 
     {
         title:'New Camp',
         caption:'Add New Campgrounds',
-        link: '/campgrounds',
+        link: req.baseUrl,
         linkCaption: 'Back to Campgrounds'
     });
 });
 //create new camp
-router.post("/", function(req, res){
-    if (!req.files) {
-        return res.status(400).send('No files were uploaded.');
-    }
-    let name = req.body.campName;
-    let image = req.files.campImage;
-    let desc = req.body.description;
-    let imageName = hasWhiteSpace(name);
-    let ext = "."+image.mimetype.split("/")[1];
-    //check for white space in name
-    function hasWhiteSpace(str) {
-        let whiteSpace = /\s/g.test(str);
-        if(whiteSpace){
-            str = str.replace(/\s+/g, '');
-            return str;
-        }
-        return str;
-      }
-    // imageName = hasWhiteSpace(imageName);
-    let path = './public/images/'+imageName+ext;
-    image.mv(path, function(err) {
-        if (err){
-            return res.status(500).send(err);
-        }
-        let newCampgrounds = {
-            name: name,
-            image: '/images/'+imageName+ext,
-            description: desc
-        };
-        Campground.create(newCampgrounds, function(err, result){
-            if(err) {
-                console.log(err);
-            } 
-            else {
-                res.redirect("/campgrounds");
-            }
+router.post("/", upload.single('image'), (req, res) => {
+    req.body.campground.image = '/images/' + req.file.filename
+    return Campground
+        .create(req.body.campground)
+        .then(result => {
+            res.redirect(req.baseUrl+'/'+result._id)
+        })
+        .catch(err => {
+            throw err;
         });
-        
-      });
 });
 //Show camp
-router.get("/:id", function(req, res){
-    Campground.findById(req.params.id).populate("comments").exec(function(err, result){
-        if (err) {
-            console.log(err);
-        }
-        else {
+router.get("/:id", (req, res) => {
+    return Campground
+        .findById(req.params.id).populate("comments").exec()
+        .then(result => {
             res.render("campgrounds/show", {
                 campground:result,
                 title:result.name,
-                caption: "You're currently viewing "+result.name,
-                link: "/campgrounds",
+                caption: "You're currently viewing "+ result.name,
+                link: req.baseUrl,
                 linkCaption: "Back to Campgrounds"
 
             });
-        }
-    });
+        })
+        .catch(err => {
+            throw err;
+        });
 });
 //New Comment
 router.get('/:id/comments/new', (req, res)=>{
@@ -107,7 +92,7 @@ router.post('/:id/comments', (req, res)=>{
         .then( comment => {
             return Campground
                 .findById(req.params.id)
-                .then(campground =>{
+                .then(campground => {
                     campground.comments.push(comment);
                     campground.save();
                     res.redirect('/campgrounds/'+req.params.id)
