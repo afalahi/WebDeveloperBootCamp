@@ -19,7 +19,7 @@ const upload = multer({storage:storage});
 //Get camp grounds
 router.get("/", (req, res) =>{
     return Campground
-        .find({})
+        .find({},{__v:false})
         .then(result => {
         res.render("campgrounds/index", {
             campgrounds: result, 
