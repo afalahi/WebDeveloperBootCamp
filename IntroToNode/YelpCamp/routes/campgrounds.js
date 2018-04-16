@@ -2,37 +2,24 @@
 const router = require('express').Router();
 const Campground = require('../models/campground');
 const Comment = require('../models/comment');
-const multer = require('multer');
-//MULTER CONFIG
-const storage = multer.diskStorage(
-	{  
-		destination: function (req, file, cb) {
-			cb(null, './public/images')
-		},
-		filename: function(req, file, callback) {
-			callback(null,Date.now()+'-'+file.originalname);
-		}
-	}
-);
-const upload = multer({storage:storage});
+const upload = require('../middleware/upload');
 
 //Get camp grounds
-router.get("/", (req, res) =>{
+router.get("/", (req, res) => {
     return Campground
         .find({})
-        .then(result => {
-        res.render("campgrounds/index", {
-            campgrounds: result, 
-            title:'Campgrounds',
-            caption:'View our amazing campgrounds from all over the world',
-            link: req.baseUrl+'/new',
-            linkCaption: 'Add new campgrounds',
-            cache:true
-        });
-    })
-    .catch(err =>{
-        throw err;
-    });
+            .then(result => {
+                res.render("campgrounds/index", {
+                    campgrounds: result, 
+                    title:'Campgrounds',
+                    caption:'View our amazing campgrounds from all over the world',
+                    link: req.baseUrl+'/new',
+                    linkCaption: 'Add new campgrounds'
+                });
+            })
+            .catch(err => {
+                throw err;
+            });
 });
 //Display form for adding new campground
 router.get("/new", (req, res) => {
