@@ -54,7 +54,6 @@ router.get("/:id", (req, res) => {
                 caption: "You're currently viewing "+ result.name,
                 link: req.baseUrl,
                 linkCaption: "Back to Campgrounds"
-
             });
         })
         .catch(err => {
