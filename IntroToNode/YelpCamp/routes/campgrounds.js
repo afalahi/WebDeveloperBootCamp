@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
                     campgrounds: result, 
                     title:'Campgrounds',
                     caption:'View our amazing campgrounds from all over the world',
-                    link: req.baseUrl+'/new',
+                    link: `${req.baseUrl}/new`,
                     linkCaption: 'Add new campgrounds'
                 });
             })
@@ -33,11 +33,11 @@ router.get("/new", (req, res) => {
 });
 //create new camp
 router.post("/", upload.single('image'), (req, res) => {
-    req.body.campground.image = '/images/' + req.file.filename
+    req.body.campground.image = `/images/${req.file.filename}`
     return Campground
         .create(req.body.campground)
         .then(result => {
-            res.redirect(req.baseUrl+'/'+result._id)
+            res.redirect(`${req.baseUrl}/${result._id}`)
         })
         .catch(err => {
             throw err;
@@ -51,7 +51,7 @@ router.get("/:id", (req, res) => {
             res.render("campgrounds/show", {
                 campground:result,
                 title:result.name,
-                caption: "You're currently viewing "+ result.name,
+                caption: `You're currently viewing${result.name}`,
                 link: req.baseUrl,
                 linkCaption: "Back to Campgrounds"
             });
@@ -81,7 +81,7 @@ router.post('/:id/comments', (req, res)=>{
                 .then(campground => {
                     campground.comments.push(comment);
                     campground.save();
-                    res.redirect('/campgrounds/'+req.params.id)
+                    res.redirect(`/campgrounds/${req.params.id}`)
                 })
                 .catch(err =>{
                     throw err;
