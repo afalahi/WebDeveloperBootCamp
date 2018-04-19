@@ -46,7 +46,7 @@ router.post("/", upload.single('image'), (req, res) => {
 //Show camp
 router.get("/:id", (req, res) => {
     return Campground
-        .findById(req.params.id).populate("comments").exec()
+        .findById(req.params.id,{__v:false}).populate("comments").exec()
         .then(result => {
             res.render("campgrounds/show", {
                 campground:result,
