@@ -7,6 +7,8 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const database = require('./config/database');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
 const seedDB = require('./seeds');
 const app = express();
 
