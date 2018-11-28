@@ -8,8 +8,9 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const database = require('./config/database');
 const passport = require('passport');
-const LocalStrategy = require('passport-local');
+// const LocalStrategy = require('passport-local');
 const seedDB = require('./seeds');
+// const User = require('./models/user')
 const app = express();
 
 // view engine setup
@@ -20,18 +21,29 @@ app.set('view engine', 'ejs');
 app.use(favicon(path.join(__dirname, '/public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/public')));
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
 app.use('/js/lib', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect css bootstrap
 
-//Use Routes from /routes/index.js
-app.use(require('./routes'));
 //delete - add sample data
 seedDB();
+//Passport Config
+app.use(require("express-session")({
+  secret: "this is my secret phrase for express session",
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+// passport.use(new LocalStrategy(User.authenticate()));
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser());
 
+//Use Routes from /routes/index.js
+app.use(require('./routes'));
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   let err = new Error('Not Found');
