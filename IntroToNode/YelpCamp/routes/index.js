@@ -4,6 +4,7 @@ const router = require('express').Router();
 //Routes
 router.use('/users', require('./users'));
 router.use('/campgrounds', require('./campgrounds'));
+router.use('/register', require('./auth'));
 
 /* GET home page. */
 router.get('/', function(req, res) {
