@@ -6,4 +6,5 @@ mongoose.connect(`mongodb://${process.env.MONGO_DB_URI}/yelpcamp`)
     .catch(err => {
         throw err
     });
-module.exports = mongoose
+
+module.exports = mongoose;
