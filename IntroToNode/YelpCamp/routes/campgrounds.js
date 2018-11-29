@@ -60,7 +60,7 @@ router
           res.render("campgrounds/show", {
             campground:result,
             title:result.name,
-            caption: `You're currently viewing${result.name}`,
+            caption: `You're currently viewing ${result.name}`,
             link: req.baseUrl,
             linkCaption: "Back to Campgrounds"
           });
@@ -68,35 +68,6 @@ router
         .catch(err => {
             throw err;
         });
-  })
-  //New Comment
-  .get('/:id/comments/new', (req, res)=>{
-    res.render('comments/new' , {
-      id: req.params.id,
-      title:"Add new comment",
-      caption: "Add comment",
-      link: "/campgrounds",
-      linkCaption: "Back to Campgrounds"
-    });
-  })
-  //Post Comment
-  .post('/:id/comments', (req, res)=>{
-    return Comment
-      .create(req.body.comment)
-        .then( comment => {
-          return Campground
-            .findById(req.params.id)
-              .then(campground => {
-                campground.comments.push(comment);
-                campground.save();
-                res.redirect(`/campgrounds/${req.params.id}`)
-              })
-              .catch(err =>{
-                  throw err;
-              });
-        })
-        .catch(err =>{
-            throw err;
-        });
   });
+  
 module.exports = router;
