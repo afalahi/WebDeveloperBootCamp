@@ -6,5 +6,11 @@ const UserSchema = new db.Schema({
   password: String
 });
 
-UserSchema.plugin(passportMongoose)
+UserSchema.plugin(passportMongoose, {
+  saltlen: 64,
+  iterations: 100000,
+  attemptsField: "failedAttempts",
+  lastLoginField: 'lastLogin',
+  usernameLowerCase: true
+})
 module.exports = db.model('User', UserSchema);
