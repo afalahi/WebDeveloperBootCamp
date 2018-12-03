@@ -1,9 +1,10 @@
-const multer = require('multer');
+const multer = require('multer')
+multer({ dest: 'uploads/' })
 //MULTER CONFIG
 const storage = multer.diskStorage(
 	{  
 		destination: function (req, file, cb) {
-			cb(null, './public/images')
+			cb(null, 'uploads/')
 		},
 		filename: function(req, file, callback) {
 			callback(null,Date.now()+'-'+file.originalname);

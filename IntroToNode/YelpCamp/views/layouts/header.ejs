@@ -34,3 +34,11 @@
 					<a href="<%= link %>" class="btn btn-primary btn-lg"><%= linkCaption %></a>
 				</p>
 			</header>
+			<% if (flash) { %>
+				<%flash.forEach(function(message) { %>
+					<div class="alert alert-<%=message.type%>" role="alert">
+							<%=message.message%>
+					</div>
+				<%})  %>
+				<% delete flash %>
+			<% } %>

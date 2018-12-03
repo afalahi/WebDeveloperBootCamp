@@ -4,7 +4,7 @@ const router = require('express').Router();
 //Routes
 router.use('/users', require('./users'));
 router.use('/campgrounds', require('./campgrounds'));
-router.use('/comments', require('./comments'));
+router.use('/campgrounds/:id/comments', require('./comments'));
 router.use('/auth', require('./auth'))
 /* GET home page. */
 router.get('/', function(req, res) {

@@ -8,6 +8,13 @@ const campSchema = new db.Schema({
   },
   image: String,
   description: String,
+  author: {
+    id: {
+      type: db.Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    username: String
+  },
   comments: [{
     type: db.Schema.Types.ObjectId,
     ref: "Comment"

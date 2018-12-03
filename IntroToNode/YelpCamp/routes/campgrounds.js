@@ -1,11 +1,10 @@
 /*jshint esversion:6 */
 const router = require('express').Router();
 const Campground = require('../models/campground');
-const Comment = require('../models/comment');
 const upload = require('../middleware/upload');
 const isLoggedIn = require('../middleware/isLoggedIn');
-
-router.use(isLoggedIn)
+const isOwner = require('../middleware/isOwner');
+const fs = require('fs');
 
 let options = {
   campgrounds: '', 
@@ -16,23 +15,23 @@ let options = {
 }
 //Get camp grounds
 router
-  .get("/", (req, res) => {
+  .get("/", (req, res, next) => {
     return Campground
       .find({})
         .then(result => {
-          options.campgrounds = result
-          options.title = 'Campgrounds'
-          options.caption = 'View our amazing campgrounds from all over the world'
-          options.link = `${req.baseUrl}/new`
-          options.linkCaption = 'Add new campgrounds'
+          options.campgrounds = result;
+          options.title = 'Campgrounds';
+          options.caption = 'View our amazing campgrounds from all over the world';
+          options.link = `${req.baseUrl}/new`;
+          options.linkCaption = 'Add new campgrounds';
           res.render("campgrounds/index", options);
         })
         .catch(err => {
-          throw err;
+          next(err);
         });
   })
   //Display form for adding new campground
-  .get("/new", (req, res) => {
+  .get("/new", isLoggedIn, (req, res) => {
     res.render("campgrounds/new", {
       title:'New Camp',
       caption:'Add New Campgrounds',
@@ -41,19 +40,23 @@ router
     });
   })
   //create new camp
-  .post("/", upload.single('image'), (req, res, next) => {
-    req.body.campground.image = `/images/${req.file.filename}`
+  .post("/", isLoggedIn, upload.single('image'), (req, res, next) => {
+    req.body.campground.image = `/${req.file.filename}`;
+    console.log(req.file.filename)
       return Campground
         .create(req.body.campground)
           .then(result => {
-            res.redirect(`${req.baseUrl}/${result._id}`)
+            result.author.id = req.user._id;
+            result.author.username = req.user.username;
+            result.save();
+            res.redirect(`${req.baseUrl}/${result._id}`);
           })
           .catch(err => {
-            next(err)
+            next(err);
           });
   })
   //Show camp
-  .get("/:id", (req, res) => {
+  .get("/:id", (req, res, next) => {
     return Campground
       .findById(req.params.id,{__v:false}).populate("comments").exec()
         .then(result => {
@@ -66,8 +69,54 @@ router
           });
         })
         .catch(err => {
-            throw err;
+           next(err);
         });
-  });
-  
+  })
+  .get('/:id/edit', isLoggedIn, isOwner(Campground), (req, res, next) => {
+    return Campground
+      .findById(req.params.id)
+        .then(result => {
+          res.render('campgrounds/edit', {
+            campground: result,
+            title: result.name,
+            caption: `Editing ${result.name}`,
+            link: `${req.baseUrl}/${req.params.id}`,
+            linkCaption: 'Go back'
+          });
+        })
+        .catch(err => {
+          next(err);
+        });
+  })
+  .put('/:id', isLoggedIn, isOwner(Campground), upload.single('image'), (req, res, next) => {
+    if (req.file) {
+      req.body.campground.image = `/${req.file.filename}`;
+    }
+    return Campground
+      .findByIdAndUpdate(req.params.id, req.body.campground)
+        .then(result => {
+          res.redirect(`${req.baseUrl}/${result._id}`);
+        })
+        .catch(err => {
+          next(err);
+        });
+  })
+  .delete('/:id', isLoggedIn, isOwner(Campground), (req, res, next) => {
+    return Campground
+      .findByIdAndRemove(req.params.id)
+        .then(result => {
+          fs.unlink(`./uploads/${result.image}`, err => {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log(`Successfully deleted ${result.image}`);
+            }
+          });
+          res.redirect(req.baseUrl);
+        })
+        .catch(err => {
+          next(err);
+        });
+  })
+
 module.exports = router;

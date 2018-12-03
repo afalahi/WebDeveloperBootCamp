@@ -1,0 +1,25 @@
+<% include ../layouts/header %>
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <form class="form" action="/campgrounds/<%=campground._id%>?_method=PUT" method="post" encType="multipart/form-data">
+                        <div class="form-group">
+                            <label for="campName">Name</label>
+                            <input type="text" class="form-control" id="name" placeholder="Campground Name" name="campground[name]", value="<%=campground.name%>">
+                        </div>
+                        <div class="form-group">
+                            <label for="campImage">Image</label>
+                            <img class="img-responsive" src="<%=campground.image%>" alt="<%=campground.name%>">
+                            <input type="file" id="image" name="image", value="<%=campground.image%>">
+                            <p class="help-block">Update campground image.</p>
+                        </div>
+                        <div class="form-group">
+                                <label for="desc">Description</label>
+                                <textarea class="form-control" name="campground[description]" id="description" cols="30" rows="5" placeholder="Tells us more about this campgrounds"><%=campground.description%></textarea>
+                            </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+<% include ../layouts/footer %>
