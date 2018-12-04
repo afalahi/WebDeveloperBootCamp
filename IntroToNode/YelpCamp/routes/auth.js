@@ -8,6 +8,7 @@ const options = {
   link: '',
   linkCaption: '',
 }
+router.use((req, res, next) =>{delete req.session.flash; next()})
 
 router
   .get('/', (req, res) => {
@@ -38,9 +39,8 @@ router
     options.caption = "Enter User name and Password",
     options.link = '/auth/register'
     options.linkCaption = "New User? Click here to register";
-    console.log(res.locals.flash)
+    // delete req.session.flash
     res.render('auth/login', options);
-    delete req.session.flash
   })
   .post('/login', passport.authenticate('local', {failureRedirect:'/auth/login'}), (req, res) => {
     res.redirect(req.session.returnTo || '/campgrounds');
@@ -54,7 +54,6 @@ router
   function isLoggedIn(req, res, next) {
     if (req.user) {
       req.flash('info', `You've already logged in`); 
-      console.log(req.session.flash);
       res.redirect('back');
     } else {
       return next();
