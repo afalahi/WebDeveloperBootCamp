@@ -8,7 +8,7 @@ const options = {
   link: '',
   linkCaption: '',
 }
-router.use((req, res, next) =>{delete req.session.flash; next()})
+// router.use('/login',(req, res, next) =>{delete req.session.flash; next()})
 
 router
   .get('/', (req, res) => {
@@ -39,7 +39,7 @@ router
     options.caption = "Enter User name and Password",
     options.link = '/auth/register'
     options.linkCaption = "New User? Click here to register";
-    // delete req.session.flash
+    delete req.session.flash
     res.render('auth/login', options);
   })
   .post('/login', passport.authenticate('local', {failureRedirect:'/auth/login'}), (req, res) => {
@@ -48,15 +48,17 @@ router
   })
   .get('/logout', (req, res) => {
     req.logOut();
-    res.redirect('back');
+    req.flash('info', 'You logged out')
+    res.redirect('/');
   });
 //if user is already logged in redirect back
-  function isLoggedIn(req, res, next) {
-    if (req.user) {
-      req.flash('info', `You've already logged in`); 
-      res.redirect('back');
-    } else {
-      return next();
-    }
-  };
+function isLoggedIn(req, res, next) {
+  if (!req.user) {
+    return next();
+  } else {
+    console.log(`flash: ${req.session.flash}`)
+    req.flash('info', `You've already logged in`); 
+    res.redirect('/campgrounds');
+  }
+};
 module.exports = router;

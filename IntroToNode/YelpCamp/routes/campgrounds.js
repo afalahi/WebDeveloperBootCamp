@@ -24,6 +24,7 @@ router
           options.caption = 'View our amazing campgrounds from all over the world';
           options.link = `${req.baseUrl}/new`;
           options.linkCaption = 'Add new campgrounds';
+          delete req.session.flash
           res.render("campgrounds/index", options);
         })
         .catch(err => {
@@ -32,6 +33,7 @@ router
   })
   //Display form for adding new campground
   .get("/new", isLoggedIn, (req, res) => {
+    delete req.session.flash
     res.render("campgrounds/new", {
       title:'New Camp',
       caption:'Add New Campgrounds',
@@ -42,16 +44,17 @@ router
   //create new camp
   .post("/", isLoggedIn, upload.single('image'), (req, res, next) => {
     req.body.campground.image = `/${req.file.filename}`;
-    console.log(req.file.filename)
       return Campground
         .create(req.body.campground)
           .then(result => {
             result.author.id = req.user._id;
             result.author.username = req.user.username;
             result.save();
+            req.flash('success', "Your campground was published");
             res.redirect(`${req.baseUrl}/${result._id}`);
           })
           .catch(err => {
+            req.flash('danger', `${err}`);
             next(err);
           });
   })
@@ -60,6 +63,7 @@ router
     return Campground
       .findById(req.params.id,{__v:false}).populate("comments").exec()
         .then(result => {
+          delete req.session.flash
           res.render("campgrounds/show", {
             campground:result,
             title:result.name,
@@ -95,6 +99,7 @@ router
     return Campground
       .findByIdAndUpdate(req.params.id, req.body.campground)
         .then(result => {
+          req.flash('success', 'your edits were published')
           res.redirect(`${req.baseUrl}/${result._id}`);
         })
         .catch(err => {
@@ -112,6 +117,7 @@ router
               console.log(`Successfully deleted ${result.image}`);
             }
           });
+          req.flash('success', 'deleted campground')
           res.redirect(req.baseUrl);
         })
         .catch(err => {

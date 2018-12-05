@@ -8,6 +8,7 @@ router.use('/campgrounds/:id/comments', require('./comments'));
 router.use('/auth', require('./auth'))
 /* GET home page. */
 router.get('/', function(req, res) {
+  delete req.session.flash
   res.render('index', 
   {
     title: 'Yelp Camp',

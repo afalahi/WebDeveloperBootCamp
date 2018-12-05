@@ -36,8 +36,6 @@
 			</header>
 			<% if (flash) { %>
 				<%flash.forEach(function(message) { %>
-					<div class="alert alert-<%=message.type%>" role="alert">
-							<%=message.message%>
-					</div>
+					<div class="alert alert-<%=message.type%>" role="alert"><%=message.message%></div>
 				<%})  %>
 			<% } %>
