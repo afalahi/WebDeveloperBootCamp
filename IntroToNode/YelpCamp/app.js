@@ -10,9 +10,8 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const methodOverride = require('method-override');
 const flash = require('flash');
-
 const database = require('./config/database');
-const User = require('./models/user')
+const User = require('./models/user');
 const locals = require('./middleware/locals');
 const app = express();
 
@@ -32,17 +31,17 @@ app.use(methodOverride('_method'));
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
 app.use('/js/lib', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect css bootstrap
-
+let maxAge = 100*10*60*60*5;
 //Passport Config
 app.use(require("express-session")({
   secret: "this is my secret phrase for express session",
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 60000
+    maxAge: maxAge //age is in milliseconds. converting to hours for simplicity --> 5 hours
   }
 }));
-app.use(flash())
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
@@ -66,6 +65,12 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error',{
+    title:err.message,
+    caption:'Something went wrong',
+    link: req.baseUrl,
+    linkCaption: 'Back'
+  });
+  delete req.session.flash;
 });
 module.exports = app;

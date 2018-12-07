@@ -4,6 +4,7 @@ const Campground = require('../models/campground');
 const upload = require('../middleware/upload');
 const isLoggedIn = require('../middleware/isLoggedIn');
 const isOwner = require('../middleware/isOwner');
+const clsFLash = require('../middleware/clsFlash');
 const fs = require('fs');
 
 let options = {
@@ -15,7 +16,8 @@ let options = {
 }
 //Get camp grounds
 router
-  .get("/", (req, res, next) => {
+  .get("/", clsFLash, (req, res, next) => {
+    console.log(req.session.cookie.maxAge)
     return Campground
       .find({})
         .then(result => {
@@ -24,7 +26,6 @@ router
           options.caption = 'View our amazing campgrounds from all over the world';
           options.link = `${req.baseUrl}/new`;
           options.linkCaption = 'Add new campgrounds';
-          delete req.session.flash
           res.render("campgrounds/index", options);
         })
         .catch(err => {
@@ -32,8 +33,7 @@ router
         });
   })
   //Display form for adding new campground
-  .get("/new", isLoggedIn, (req, res) => {
-    delete req.session.flash
+  .get("/new", isLoggedIn,clsFLash, (req, res) => {
     res.render("campgrounds/new", {
       title:'New Camp',
       caption:'Add New Campgrounds',
@@ -59,11 +59,10 @@ router
           });
   })
   //Show camp
-  .get("/:id", (req, res, next) => {
+  .get("/:id", clsFLash, (req, res, next) => {
     return Campground
       .findById(req.params.id,{__v:false}).populate("comments").exec()
         .then(result => {
-          delete req.session.flash
           res.render("campgrounds/show", {
             campground:result,
             title:result.name,
@@ -76,7 +75,7 @@ router
            next(err);
         });
   })
-  .get('/:id/edit', isLoggedIn, isOwner(Campground), (req, res, next) => {
+  .get('/:id/edit', isLoggedIn, isOwner(Campground), clsFLash, (req, res, next) => {
     return Campground
       .findById(req.params.id)
         .then(result => {
@@ -99,7 +98,7 @@ router
     return Campground
       .findByIdAndUpdate(req.params.id, req.body.campground)
         .then(result => {
-          req.flash('success', 'your edits were published')
+          req.flash('success', 'your edits were published');
           res.redirect(`${req.baseUrl}/${result._id}`);
         })
         .catch(err => {
@@ -117,12 +116,11 @@ router
               console.log(`Successfully deleted ${result.image}`);
             }
           });
-          req.flash('success', 'deleted campground')
+          req.flash('success', 'deleted campground');
           res.redirect(req.baseUrl);
         })
         .catch(err => {
           next(err);
         });
   })
-
 module.exports = router;

@@ -6,11 +6,13 @@ function isOwner(model){
           if(result.author.id.equals(req.user._id)) {
             next();
           } else {
+            req.flash('warning', `Sorry ${req.user.username} you don't have permissions to perform this action`);
             res.redirect(`/campgrounds/${req.params.id}`);
           }
         })
         .catch(err => {
-          next(err);
+          req.flash('danger', `Something went wrong: ${err.message}`);
+          return next(err);
         });
   }
 }

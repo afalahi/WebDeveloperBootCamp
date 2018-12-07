@@ -27,9 +27,19 @@
                         </div>
                     </div>
                     <div class="well">
+                        <% if (user) { %> 
                         <div class="text-right">
-                            <a href="/campgrounds/<%=campground._id%>/comments/new" class="btn btn-success">Add new comment</a>
+                            <!--<a href="/campgrounds/<%=campground._id%>/comments/new" class="btn btn-success">Add new comment</a>-->
+                            <form action="/campgrounds/<%=campground._id%>/comments" method="post">
+                                <div class="form-group">
+                                        <textarea class="form-control" name="comment[text]" id="desc" cols="30" rows="2" placeholder="Tells us your thoughts"></textarea>
+                                </div>
+                                <div class="form-group">
+                                        <button class="btn btn-sm btn-primary" type="submit">Comment</button>
+                                </div>
+                            </form>
                         </div>
+                        <% } %>
                         <hr>
                         <% campground.comments.forEach(function(comment){ %>
                             <div class="row">

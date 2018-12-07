@@ -8,17 +8,24 @@ const isOwner = require('../middleware/isOwner');
 router.use(isLoggedIn)
 
 router
-  .get('/new', (req, res) => {
-    res.render('comments/new' , {
-      id: req.params.id,
-      title:"Add new comment",
-      caption: "Add comment",
-      link: "/campgrounds",
-      linkCaption: "Back to Campgrounds"
-    });
+  .get('/', (req, res, next) => {
+    res.redirect(`/campgrounds/${req.params.id}`)
   })
+  // .get('/new', (req, res) => {
+  //   res.render('comments/new' , {
+  //     id: req.params.id,
+  //     title:"Add new comment",
+  //     caption: "Add comment",
+  //     link: "/campgrounds",
+  //     linkCaption: "Back to Campgrounds"
+  //   });
+  // })
   //Post Comment
   .post('/', (req, res) => {
+    if (req.body.comment.text.length == 0) {
+      req.flash('warning', `Sorry, but comments cannot be empty`);
+      return res.redirect('back');
+    }
     return Comment
       .create(req.body.comment)
         .then( comment => {
@@ -30,6 +37,7 @@ router
               .then(campground => {
                 campground.comments.push(comment);
                 campground.save();
+                req.flash('success', 'Your comments were posted')
                 res.redirect(`/campgrounds/${req.params.id}`)
               })
               .catch(err =>{
@@ -59,10 +67,10 @@ router
   })
   .put('/:cid',isLoggedIn, isOwner(Comment), (req, res, next) => {
     return Comment
-      .findByIdAndUpdate(req.params.cid, req.body.comment)
+      .findOneAndUpdate(req.params.cid, req.body.comment)
         .then(result => {
-          result.save()
-          res.redirect('..')
+          result.save();
+          res.redirect('..');
         })
         .catch(err => {
           next(err);
@@ -72,7 +80,7 @@ router
     return Comment
       .findOneAndRemove(req.params.cid)
         .then(results => {
-          console.log(req.originalUrl)
+          req.flash('success' , 'comment deleted');
           res.redirect(`/campgrounds/${req.params.id}`);
         })
         .catch(err => {
