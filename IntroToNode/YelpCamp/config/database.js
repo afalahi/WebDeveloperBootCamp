@@ -7,7 +7,7 @@ connection.on('connecting', () => {
 
 connection.on('error', (err) => {
     console.log(err.message)
-    mongoose.disconnect();
+    // mongoose.disconnect();
 });
 
 connection.on('connected', () => {
@@ -24,7 +24,6 @@ connection.on('reconnected',  () => {
 
 connection.on('disconnected', () => {
     console.log('disconnected')
-    mongoose.connect(`mongodb://${process.env.MONGO_DB_URI}/yelpcamp`, {useNewUrlParser: true,autoReconnect: true})
 });
 
 mongoose.connect(`mongodb://${process.env.MONGO_DB_URI}/yelpcamp`, {useNewUrlParser: true, autoReconnect: true})
