@@ -1,5 +1,6 @@
 /* jshint esversion:6 */
 require('dotenv').config();
+require('./config/database');
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
@@ -10,7 +11,6 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const methodOverride = require('method-override');
 const flash = require('flash');
-const database = require('./config/database');
 const User = require('./models/user');
 const locals = require('./middleware/locals');
 const app = express();
