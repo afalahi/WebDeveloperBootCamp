@@ -11,15 +11,6 @@ router
   .get('/', (req, res, next) => {
     res.redirect(`/campgrounds/${req.params.id}`)
   })
-  // .get('/new', (req, res) => {
-  //   res.render('comments/new' , {
-  //     id: req.params.id,
-  //     title:"Add new comment",
-  //     caption: "Add comment",
-  //     link: "/campgrounds",
-  //     linkCaption: "Back to Campgrounds"
-  //   });
-  // })
   //Post Comment
   .post('/', (req, res) => {
     if (req.body.comment.text.length == 0) {
@@ -79,9 +70,16 @@ router
   .delete('/:cid', isLoggedIn, isOwner(Comment), (req, res, next) => {
     return Comment
       .findOneAndRemove(req.params.cid)
-        .then(results => {
-          req.flash('success' , 'comment deleted');
-          res.redirect(`/campgrounds/${req.params.id}`);
+        .then(comment => {
+          return Campground
+            .findOneAndUpdate(req.params.id, {$pull: {comments: comment._id}})
+              .then(result => {
+                req.flash('success' , 'comment deleted');
+                res.redirect(`/campgrounds/${req.params.id}`);
+              })
+              .catch(err => {
+                next(err);
+              });
         })
         .catch(err => {
           next(err);

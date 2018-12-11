@@ -2,7 +2,6 @@ const router = require('express').Router();
 const User = require('../models/user');
 const passport = require('passport');
 const clsFlash = require('../middleware/clsflash');
-
 const options = {
   title: '',
   caption: '',
@@ -21,13 +20,17 @@ router
     res.render('auth/register', options);
   })
   .post('/register', (req, res, next) => {
-    User.register(new User({username: req.body.username}), req.body.password, (err, user) => {
+    User.register(new User({
+      username: req.body.username,
+      givenName: req.body.givenName,
+      sn: req.body.sn
+    }), req.body.password, (err, user) => {
       if (err) {
         req.flash('danger', err.message);
         return res.redirect('register');
       }
       passport.authenticate("local")(req, res, () => {
-        req.flash('success', `Registration successful. Welcome ${user.username}`);
+        req.flash('success', `Registration successful. Welcome ${user.givenName}`);
         res.redirect('/campgrounds');
       });
     });

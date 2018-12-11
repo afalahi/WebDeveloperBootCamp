@@ -8,10 +8,8 @@ router.use('/campgrounds/:id/comments', require('./comments'));
 router.use('/auth', require('./auth'))
 /* GET home page. */
 router.get('/', clsFlash, (req, res) => {
-  // delete req.session.flash
   res.render('index', 
   {
-    title: 'Yelp Camp',
     caption:'We are glad you visited. View our amazing campgrounds',
     link: '/campgrounds',
     linkCaption: 'View Campgrounds'

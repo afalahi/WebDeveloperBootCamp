@@ -9,7 +9,6 @@ const fs = require('fs');
 
 let options = {
   campgrounds: '', 
-  title:'',
   caption:'',
   link: '',
   linkCaption: ''
@@ -17,7 +16,6 @@ let options = {
 //Get camp grounds
 router
   .get("/", clsFLash, (req, res, next) => {
-    console.log(req.session.cookie.maxAge)
     return Campground
       .find({})
         .then(result => {
@@ -33,7 +31,7 @@ router
         });
   })
   //Display form for adding new campground
-  .get("/new", isLoggedIn,clsFLash, (req, res) => {
+  .get("/new", isLoggedIn, clsFLash, (req, res) => {
     res.render("campgrounds/new", {
       title:'New Camp',
       caption:'Add New Campgrounds',

@@ -1,12 +1,32 @@
 const mongoose = require('mongoose');
-mongoose.connect(`mongodb://${process.env.MONGO_DB_URI}/yelpcamp`, {useNewUrlParser: true})
-    mongoose.connection.on('connected', () => {
-        console.log('Connected to Server')
-    });
-    mongoose.connection.on('disconnected', () => {
-        console.log('disconnected')
-    });
-    mongoose.connection.on('error', (err) => {
-        console.log(err.message)
-    });
+const connection = mongoose.connection
+
+connection.on('connecting', () => {
+    console.log('connecting to MongoDB...');
+});
+
+connection.on('error', (err) => {
+    console.log(err.message)
+    mongoose.disconnect();
+});
+
+connection.on('connected', () => {
+    console.log('Connected to Server')
+});
+
+connection.once('open', () => {
+    console.log('MongoDB connection opened!');
+});
+
+connection.on('reconnected',  () => {
+    console.log('MongoDB reconnected!');    
+});
+
+connection.on('disconnected', () => {
+    console.log('disconnected')
+    mongoose.connect(`mongodb://${process.env.MONGO_DB_URI}/yelpcamp`, {useNewUrlParser: true,autoReconnect: true})
+});
+
+mongoose.connect(`mongodb://${process.env.MONGO_DB_URI}/yelpcamp`, {useNewUrlParser: true, autoReconnect: true})
+
 module.exports = mongoose;
