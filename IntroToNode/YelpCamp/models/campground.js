@@ -13,7 +13,7 @@ const campSchema = new db.Schema({
       type: db.Schema.Types.ObjectId,
       ref: 'User'
     },
-    username: String
+    fullName: String
   },
   comments: [{
     type: db.Schema.Types.ObjectId,

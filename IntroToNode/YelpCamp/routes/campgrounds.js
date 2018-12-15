@@ -46,7 +46,7 @@ router
         .create(req.body.campground)
           .then(result => {
             result.author.id = req.user._id;
-            result.author.username = req.user.username;
+            result.author.fullName = `${req.user.givenName} ${req.user.sn}`;
             result.save();
             req.flash('success', "Your campground was published");
             res.redirect(`${req.baseUrl}/${result._id}`);

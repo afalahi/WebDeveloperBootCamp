@@ -23,7 +23,8 @@ router
     User.register(new User({
       username: req.body.username,
       givenName: req.body.givenName,
-      sn: req.body.sn
+      sn: req.body.sn,
+      uid: req.body.username
     }), req.body.password, (err, user) => {
       if (err) {
         req.flash('danger', err.message);
