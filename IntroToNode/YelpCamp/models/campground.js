@@ -9,15 +9,16 @@ const campSchema = new db.Schema({
   image: String,
   description: String,
   author: {
-    id: {
-      type: db.Schema.Types.ObjectId,
-      ref: 'User'
-    },
-    fullName: String
-  },
-  comments: [{
     type: db.Schema.Types.ObjectId,
-    ref: "Comment"
-    }]
-});
+    ref: 'User'
+  },
+}, {toJSON: {virtuals: true}});
+
+campSchema.virtual('comments', {
+  ref: 'Comment',
+  localField: '_id',
+  foreignField: 'discussion_id',
+  justOne: false
+})
+
 module.exports = db.model('Campground', campSchema);

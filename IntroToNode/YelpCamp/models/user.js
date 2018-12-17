@@ -10,7 +10,8 @@ const UserSchema = new db.Schema({
   department: String,
   username: String,
   password: String
-});
+}, {toJSON: {virtuals: true}});
+
 UserSchema.plugin(passportMongoose, {
   saltlen: 64,
   iterations: 100000,

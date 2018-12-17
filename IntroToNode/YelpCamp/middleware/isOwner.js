@@ -3,7 +3,7 @@ function isOwner(model){
     return model
       .findById(req.params.cid||req.params.id)
         .then(result => {
-          if(result.author.id.equals(req.user._id)) {
+          if(result.author.equals(req.user._id)) {
             next();
           } else {
             req.flash('warning', `Sorry ${req.user.username} you don't have permissions to perform this action`);

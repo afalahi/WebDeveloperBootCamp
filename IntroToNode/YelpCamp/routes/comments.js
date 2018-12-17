@@ -20,20 +20,13 @@ router
     return Comment
       .create(req.body.comment)
         .then( comment => {
-          comment.author.id = req.user._id;
-          comment.author.username = req.user.username;
+          comment.author = req.user._id;
+          comment.discussion_id = req.params.id
           comment.save()
-          return Campground
-            .findById(req.params.id)
-              .then(campground => {
-                campground.comments.push(comment);
-                campground.save();
-                req.flash('success', 'Your comments were posted')
-                res.redirect(`/campgrounds/${req.params.id}`)
-              })
-              .catch(err =>{
-                  throw err;
-              });
+        })
+        .then(result => {
+          req.flash('success', 'Your comments were posted')
+          res.redirect(`/campgrounds/${req.params.id}`)
         })
         .catch(err =>{
             throw err;
@@ -43,6 +36,7 @@ router
     return Comment
       .findById(req.params.cid)
         .then(result => {
+          console.log(result._id)
           res.render('comments/edit', {
             comment: result,
             title:"edit comment",
@@ -58,7 +52,7 @@ router
   })
   .put('/:cid',isLoggedIn, isOwner(Comment), (req, res, next) => {
     return Comment
-      .findOneAndUpdate(req.params.cid, req.body.comment)
+      .findOneAndUpdate({_id:req.params.cid}, req.body.comment)
         .then(result => {
           result.save();
           res.redirect('..');
@@ -69,17 +63,10 @@ router
   })
   .delete('/:cid', isLoggedIn, isOwner(Comment), (req, res, next) => {
     return Comment
-      .findOneAndRemove(req.params.cid)
+      .findOneAndDelete({_id: req.params.cid})
         .then(comment => {
-          return Campground
-            .findOneAndUpdate(req.params.id, {$pull: {comments: comment._id}})
-              .then(result => {
-                req.flash('success' , 'comment deleted');
-                res.redirect(`/campgrounds/${req.params.id}`);
-              })
-              .catch(err => {
-                next(err);
-              });
+          req.flash('success', 'comment deleted');
+          res.redirect(`/campgrounds/${req.params.id}`);
         })
         .catch(err => {
           next(err);

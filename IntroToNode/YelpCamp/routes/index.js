@@ -5,7 +5,8 @@ const clsFlash = require('../middleware/clsflash');
 router.use('/users', require('./users'));
 router.use('/campgrounds', require('./campgrounds'));
 router.use('/campgrounds/:id/comments', require('./comments'));
-router.use('/auth', require('./auth'))
+router.use('/auth', require('./auth'));
+router.use('/users', require('./users'));
 /* GET home page. */
 router.get('/', clsFlash, (req, res) => {
   res.render('index', 

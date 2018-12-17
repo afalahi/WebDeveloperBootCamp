@@ -1,6 +1,7 @@
 /*jshint esversion:6 */
 const router = require('express').Router();
 const Campground = require('../models/campground');
+const Comment = require('../models/comment');
 const upload = require('../middleware/upload');
 const isLoggedIn = require('../middleware/isLoggedIn');
 const isOwner = require('../middleware/isOwner');
@@ -45,8 +46,7 @@ router
       return Campground
         .create(req.body.campground)
           .then(result => {
-            result.author.id = req.user._id;
-            result.author.fullName = `${req.user.givenName} ${req.user.sn}`;
+            result.author = req.user._id;
             result.save();
             req.flash('success', "Your campground was published");
             res.redirect(`${req.baseUrl}/${result._id}`);
@@ -59,19 +59,28 @@ router
   //Show camp
   .get("/:id", clsFLash, (req, res, next) => {
     return Campground
-      .findById(req.params.id,{__v:false}).populate("comments").exec()
-        .then(result => {
-          res.render("campgrounds/show", {
-            campground:result,
-            title:result.name,
-            caption: `You're currently viewing ${result.name}`,
-            link: req.baseUrl,
-            linkCaption: "Back to Campgrounds"
-          });
+      .findById(req.params.id, {__v:false})
+        .populate({
+          path: 'comments',
+          populate: {
+            path: 'author',
+            model: 'User'
+          }
         })
-        .catch(err => {
-           next(err);
-        });
+        .populate('author')
+          .exec()
+            .then(result => {
+              res.render("campgrounds/show", {
+                campground:result,
+                title:result.name,
+                caption: `You're currently viewing ${result.name}`,
+                link: req.baseUrl,
+                linkCaption: "Back to Campgrounds"
+              });
+            })
+            .catch(err => {
+              next(err);
+            });
   })
   .get('/:id/edit', isLoggedIn, isOwner(Campground), clsFLash, (req, res, next) => {
     return Campground
@@ -94,7 +103,7 @@ router
       req.body.campground.image = `/${req.file.filename}`;
     }
     return Campground
-      .findByIdAndUpdate(req.params.id, req.body.campground)
+      .findOneAndUpdate({_id: req.params.id}, req.body.campground)
         .then(result => {
           req.flash('success', 'your edits were published');
           res.redirect(`${req.baseUrl}/${result._id}`);
@@ -105,7 +114,7 @@ router
   })
   .delete('/:id', isLoggedIn, isOwner(Campground), (req, res, next) => {
     return Campground
-      .findByIdAndRemove(req.params.id)
+      .findOneAndDelete({_id: req.params.id})
         .then(result => {
           fs.unlink(`./uploads/${result.image}`, err => {
             if (err) {
@@ -114,6 +123,21 @@ router
               console.log(`Successfully deleted ${result.image}`);
             }
           });
+          return result
+        })
+        .then(result => {
+          return Comment
+            .find({discussion_id: result._id})
+              .then(result => {
+                result.forEach(comment => {
+                  comment.remove();
+                });
+              })
+              .catch(err => {
+                next(err);
+              });
+        })
+        .then(result => {
           req.flash('success', 'deleted campground');
           res.redirect(req.baseUrl);
         })
