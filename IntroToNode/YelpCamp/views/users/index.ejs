@@ -1,0 +1,38 @@
+<% include ../layouts/header %>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <table class="table table-striped table-bordered" id="userTable">
+                        <thead>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Username</th>
+                                <th>Department</th>
+                                <th>Title</th>
+                                <th>Location</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% users.forEach(user => { %>
+                                <tr>
+                                    <td><%= user.givenName %></td>
+                                    <td><%= user.sn %></td>
+                                    <td><%= user.username %></td>
+                                    <td><%= user.department %></td>
+                                    <td><%= user.title %></td>
+                                    <td><%= user.location %></td>
+                                </tr>
+                          <%  }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% include ../layouts/footer %>

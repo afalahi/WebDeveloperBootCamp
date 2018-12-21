@@ -19,8 +19,10 @@ UserSchema.plugin(passportMongoose, {
   lastLoginField: 'lastLogin',
   usernameLowerCase: true
 });
+
 UserSchema.virtual('fullName')
   .get(function() {
     return `${this.givenName} ${this.sn}`
-  })
+  });
+
 module.exports = db.model('User', UserSchema);

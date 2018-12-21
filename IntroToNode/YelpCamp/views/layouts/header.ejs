@@ -5,10 +5,13 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<title><%= title %></title>
-		<link rel='stylesheet' href='/css/bootstrap.min.css' />
-		<link rel="stylesheet" href="/styles/style.css">
-		<script src="/js/lib/jquery.min.js"></script>
-		<script src="/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" integrity="sha384-PmY9l28YgO4JwMKbTvgaS7XNZJ30MK9FAZjjzXtlqyZCqBY6X6bXIkM++IkyinN+" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="/styles/style.css">
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.css"/>
+		<script type="text/javascript" src="/js/lib/jquery.min.js"></script>
+		<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.18/datatables.min.js"></script>
+		<script type="text/javascript" src="/scripts/filter.js"></script>
 	</head>
 	<body>
 		<nav class="navbar navbar-default">
@@ -32,7 +35,7 @@
     	<div class="container">
 			<header class="jumbotron">
 				<h1>Welcome to YelpCamp</h1>
-				<p><%= caption %></p>
+				<p class="caption"><%= caption %></p>
 				<p>
 					<a href="<%= link %>" class="btn btn-primary btn-lg"><%= linkCaption %></a>
 				</p>
