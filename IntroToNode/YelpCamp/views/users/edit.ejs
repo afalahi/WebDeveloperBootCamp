@@ -1,0 +1,35 @@
+<% include ../layouts/header %>
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <form class="form" action="/users/<%= usr.id %>?_method=PUT" method="post">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" class="form-control" id="firstName" placeholder="John" name="user[profile][firstName]", value="<%= usr.profile.given_name %>">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" class="form-control" id="lastName" placeholder="Doe" name="user[profile][lastName]", value="<%= usr.profile.family_name %>">
+                        </div>
+                        <div class="form-group">
+                            <label for="department">Department</label>
+                            <input type="text" class="form-control" id="department" placeholder="Engineering" name="user[profile][department]", value="<%= usr.profile.department %>">
+                        </div>
+                        <div class="form-group">
+                            <label for="birthdate">Date of Birth</label>
+                            <input type="text" class="form-control" id="birthdate" placeholder="MM/DD/YYYY" name="user[profile][birthdate]", value="<%= usr.profile.birthdate %>">
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <input type="text" class="form-control" id="gender" name="user[profile][gender]", value="<%= usr.profile.gender %>">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="text" class="form-control" id="email" placeholder="jon@example.com" name="user[profile][email]", value="<%= usr.profile.email %>">
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-lg btn-primary btn-block">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+<% include ../layouts/footer %>

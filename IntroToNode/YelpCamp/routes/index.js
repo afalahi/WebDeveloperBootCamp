@@ -9,12 +9,13 @@ router.use('/auth', require('./auth'));
 router.use('/users', require('./users'));
 /* GET home page. */
 router.get('/', clsFlash, (req, res) => {
-  res.render('index', 
-  {
-    caption:'We are glad you visited. View our amazing campgrounds',
-    link: '/campgrounds',
-    linkCaption: 'View Campgrounds'
-  });
+  res.redirect('/campgrounds')
+  // res.render('index', 
+  // {
+  //   caption:'We are glad you visited. View our amazing campgrounds',
+  //   link: '/campgrounds',
+  //   linkCaption: 'View Campgrounds'
+  // });
 });
 
 module.exports = router;

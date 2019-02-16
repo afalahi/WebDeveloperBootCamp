@@ -4,8 +4,8 @@ const commentSchema = new db.Schema({
 	text: String,
 	discussion_id: db.Schema.Types.ObjectId,
 	author:{
-			type: db.Schema.Types.ObjectId,
-			ref: "User"
+		id: String,
+		name: String
 	},
 	created: {
 		type: Date,

@@ -4,3 +4,37 @@
 .caption {
   text-transform: capitalize;
 }
+
+/*login*/
+h1 {
+  font-size: 2em;
+}
+
+#okta-sign-in .button-primary {
+  background: linear-gradient(#00BCD4, #03A9F4);
+  border: none;
+}
+#okta-sign-in .button-primary:hover {
+  background: linear-gradient(rgb(2, 171, 194), rgb(2, 109, 158));
+}
+.default-custom-button {
+  background-color:#4cbf9c;
+  border: 1px solid #4cbf9c;
+}
+.default-custom-button:hover {
+  background-color:#44ad8e;
+  border: 1px solid #4cbf9c;
+}
+
+/*register*/
+#register  {
+    background-color:#4cbf9c;
+    border: 1px solid #4cbf9c;
+  }
+#register:hover  {
+  background-color:#44ad8e;
+  border: 1px solid #4cbf9c;
+}
+.error {
+  color: #D32F2F;
+}

@@ -9,8 +9,8 @@ const campSchema = new db.Schema({
   image: String,
   description: String,
   author: {
-    type: db.Schema.Types.ObjectId,
-    ref: 'User'
+    id: String,
+    name: String
   },
 }, {toJSON: {virtuals: true}});
 

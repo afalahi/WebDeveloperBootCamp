@@ -3,26 +3,30 @@
                 <div class="col-md-4 col-md-offset-4">
                     <form class="form" action="/auth/register" method="POST">
                         <div class="form-group">
-                            <label for="givenName">First Name</label>
-                            <input type="text" class="form-control" name="givenName" placeholder="Jane">
+                            <label for="firstName">First Name</label>
+                            <input type="text" class="form-control" name="firstName" placeholder="Jane" required value="<%= body.firstName %>"/>
+                            <label class="error"><%= errors.firstName %></label>
                         </div>
                         <div class="form-group">
-                            <label for="sn">Last Name</label>
-                            <input type="text" name="sn" placeholder="Doe" class="form-control">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" name="lastName" placeholder="Doe" class="form-control" required value="<%= body.lastName %>" />
+                            <label class="error"><%= errors.lasttName %></label>
                         </div>
                         <div class="form-group">
-                            <label for="username">User Name</label>
-                            <input type="text" class="form-control" name="username" placeholder="User Name">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" name="email" placeholder="jane@example.com" required value="<%= body.email %>" />
+                            <label class="error"><%= errors.email %></label>
+                            <label class="error"><%= errors.login %></label>
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" class="form-control" name="password" placeholder="Your Password">
+                            <input type="password" class="form-control" name="password" placeholder="*********" required value="<% body.password %>" />
+                            <label class="error"><%= errors.password %></label>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-lg btn-primary btn-block">Register</button>
+                            <button id="register" type="submit" class="btn btn-lg btn-primary btn-block">Register</button>
                         </div>
                     </form>
                 </div>
             </div>
-
 <% include ../layouts/footer %>

@@ -6,6 +6,9 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "@okta/jwt-verifier": "0.0.14",
+    "@okta/oidc-middleware": "^1.0.2",
+    "@okta/okta-sdk-nodejs": "^1.2.0",
     "@types/bootstrap": "^3.3.36",
     "@types/ejs": "^2.5.0",
     "@types/jquery": "^3.2.18",
@@ -23,7 +26,7 @@
     "helmet": "^3.9.0",
     "jquery": "^3.2.1",
     "method-override": "^3.0.0",
-    "moment": "^2.22.0",
+    "moment": "^2.23.0",
     "mongodb": "^3.0.5",
     "mongoose": "^5.0.12",
     "morgan": "~1.9.0",
@@ -31,6 +34,8 @@
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^5.0.0",
+    "request-promise": "^4.2.2",
+    "requests": "^0.2.2",
     "serve-favicon": "~2.4.5"
   }
 }

@@ -2,10 +2,11 @@
 const router = require('express').Router({mergeParams:true});
 const Campground = require('../models/campground');
 const Comment = require('../models/comment');
-const isLoggedIn = require('../middleware/isLoggedIn');
+// const isLoggedIn = require('../middleware/isLoggedIn');
+const oidc = require('../middleware/oidc');
 const isOwner = require('../middleware/isOwner');
 
-router.use(isLoggedIn)
+router.use(oidc.ensureAuthenticated())
 
 router
   .get('/', (req, res, next) => {
@@ -19,10 +20,11 @@ router
     }
     return Comment
       .create(req.body.comment)
-        .then( comment => {
-          comment.author = req.user._id;
-          comment.discussion_id = req.params.id
-          comment.save()
+        .then( result => {
+          result.author.id = req.userContext.userinfo.sub;
+          result.author.name = req.userContext.userinfo.name
+          result.discussion_id = req.params.id
+          result.save()
         })
         .then(result => {
           req.flash('success', 'Your comments were posted')
@@ -32,11 +34,11 @@ router
             throw err;
         });
   })
-  .get('/:cid/edit',isOwner(Comment), (req, res, next) => {
+  .get('/:cid/edit', isOwner(Comment), (req, res, next) => {
     return Comment
       .findById(req.params.cid)
         .then(result => {
-          console.log(result._id)
+          // console.log(result._id)
           res.render('comments/edit', {
             comment: result,
             title:"edit comment",
@@ -50,7 +52,7 @@ router
           next(err);
         })
   })
-  .put('/:cid',isLoggedIn, isOwner(Comment), (req, res, next) => {
+  .put('/:cid', oidc.ensureAuthenticated(), isOwner(Comment), (req, res, next) => {
     return Comment
       .findOneAndUpdate({_id:req.params.cid}, req.body.comment)
         .then(result => {
@@ -61,7 +63,7 @@ router
           next(err);
         });
   })
-  .delete('/:cid', isLoggedIn, isOwner(Comment), (req, res, next) => {
+  .delete('/:cid', oidc.ensureAuthenticated(), isOwner(Comment), (req, res, next) => {
     return Comment
       .findOneAndDelete({_id: req.params.cid})
         .then(comment => {

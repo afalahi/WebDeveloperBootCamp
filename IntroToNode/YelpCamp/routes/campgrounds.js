@@ -7,6 +7,7 @@ const isLoggedIn = require('../middleware/isLoggedIn');
 const isOwner = require('../middleware/isOwner');
 const clsFLash = require('../middleware/clsFlash');
 const fs = require('fs');
+const oidc = require('../middleware/oidc');
 
 let options = {
   campgrounds: '', 
@@ -32,7 +33,7 @@ router
         });
   })
   //Display form for adding new campground
-  .get("/new", isLoggedIn, clsFLash, (req, res) => {
+  .get("/new", oidc.ensureAuthenticated(), clsFLash, (req, res) => {
     res.render("campgrounds/new", {
       title:'New Camp',
       caption:'Add New Campgrounds',
@@ -41,12 +42,13 @@ router
     });
   })
   //create new camp
-  .post("/", isLoggedIn, upload.single('image'), (req, res, next) => {
+  .post("/", oidc.ensureAuthenticated(), upload.single('image'), (req, res, next) => {
     req.body.campground.image = `/${req.file.filename}`;
       return Campground
         .create(req.body.campground)
           .then(result => {
-            result.author = req.user._id;
+            result.author.id = req.userContext.userinfo.sub;
+            result.author.name = req.userContext.userinfo.name
             result.save();
             req.flash('success', "Your campground was published");
             res.redirect(`${req.baseUrl}/${result._id}`);
@@ -59,30 +61,21 @@ router
   //Show camp
   .get("/:id", clsFLash, (req, res, next) => {
     return Campground
-      .findById(req.params.id, {__v:false})
-        .populate({
-          path: 'comments',
-          populate: {
-            path: 'author',
-            model: 'User'
-          }
+      .findById(req.params.id, {__v:false}).populate('comments').exec()
+        .then(result => {
+          res.render("campgrounds/show", {
+            campground:result,
+            title:result.name,
+            caption: `You're currently viewing ${result.name}`,
+            link: req.baseUrl,
+            linkCaption: "Back to Campgrounds"
+          });
         })
-        .populate('author')
-          .exec()
-            .then(result => {
-              res.render("campgrounds/show", {
-                campground:result,
-                title:result.name,
-                caption: `You're currently viewing ${result.name}`,
-                link: req.baseUrl,
-                linkCaption: "Back to Campgrounds"
-              });
-            })
-            .catch(err => {
-              next(err);
-            });
+        .catch(err => {
+          next(err);
+        });
   })
-  .get('/:id/edit', isLoggedIn, isOwner(Campground), clsFLash, (req, res, next) => {
+  .get('/:id/edit', oidc.ensureAuthenticated(), isOwner(Campground), clsFLash, (req, res, next) => {
     return Campground
       .findById(req.params.id)
         .then(result => {
@@ -98,7 +91,7 @@ router
           next(err);
         });
   })
-  .put('/:id', isLoggedIn, isOwner(Campground), upload.single('image'), (req, res, next) => {
+  .put('/:id', oidc.ensureAuthenticated(), isOwner(Campground), upload.single('image'), (req, res, next) => {
     if (req.file) {
       req.body.campground.image = `/${req.file.filename}`;
     }
@@ -112,7 +105,7 @@ router
           next(err);
         });
   })
-  .delete('/:id', isLoggedIn, isOwner(Campground), (req, res, next) => {
+  .delete('/:id', oidc.ensureAuthenticated(), isOwner(Campground), (req, res, next) => {
     return Campground
       .findOneAndDelete({_id: req.params.id})
         .then(result => {

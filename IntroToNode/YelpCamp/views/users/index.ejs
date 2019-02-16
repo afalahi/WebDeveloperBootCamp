@@ -11,20 +11,20 @@
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Username</th>
-                                <th>Department</th>
+                                <!-- <th>Department</th>
                                 <th>Title</th>
-                                <th>Location</th>
+                                <th>Location</th> -->
                             </tr>
                         </thead>
                         <tbody>
                             <% users.forEach(user => { %>
                                 <tr>
-                                    <td><%= user.givenName %></td>
-                                    <td><%= user.sn %></td>
-                                    <td><%= user.username %></td>
-                                    <td><%= user.department %></td>
-                                    <td><%= user.title %></td>
-                                    <td><%= user.location %></td>
+                                    <td><%= user.profile.given_name %></td>
+                                    <td><%= user.profile.family_name %></td>
+                                    <td><a href="/users/<%= user.id %>"><%= user.profile.email %></a></td>
+                                    <!-- <td><%= user.profile.department %></td>
+                                    <td><%= user.profile.title %></td>
+                                    <td><%= user.profile.location %></td> -->
                                 </tr>
                           <%  }); %>
                         </tbody>
