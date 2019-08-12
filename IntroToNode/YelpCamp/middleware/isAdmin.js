@@ -1,4 +1,3 @@
-const rp = require('request-promise')
 const OktaJwtVerifier = require('@okta/jwt-verifier');
 
 const jwtVerify = new OktaJwtVerifier({

@@ -18,7 +18,7 @@ router
   .get('/', (req, res) => {
     res.redirect('/');
   })
-  .get('/register',clsFlash, (req, res) => {
+  .get('/register',clsFlash, isLoggedIn, (req, res) => {
     options.title ='Register';
     options.caption = 'New User Registration';
     options.link = '/campgrounds';
@@ -112,12 +112,12 @@ router
     res.redirect('/');
   });
 //if user is already logged in redirect back
-// function isLoggedIn(req, res, next) {
-//   if (!req.user) {
-//     return next();
-//   } else {
-//     req.flash('info', `You've already logged in`); 
-//     res.redirect('/campgrounds');
-//   }
-// };
+function isLoggedIn(req, res, next) {
+  if (!req.userContext) {
+    return next();
+  } else {
+    req.flash('info', `You've already logged in`); 
+    res.redirect('/campgrounds');
+  }
+};
 module.exports = router;
