@@ -1,13 +1,14 @@
 const OktaJwtVerifier = require('@okta/jwt-verifier');
 
 const jwtVerify = new OktaJwtVerifier({
-  issuer:"https://dev-451953.oktapreview.com/oauth2/default",
+  issuer:"https://login.isengard.us/oauth2/default",
   clientId: process.env.CLIENT_ID
 });
 function isAdmin(req, res, next){
   let user  = req.userContext
   jwtVerify.verifyAccessToken(user.tokens.access_token)
     .then(result => {
+      console.log(result)
       if(result.claims.admin) {
         return next();
       }

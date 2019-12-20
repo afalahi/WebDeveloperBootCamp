@@ -30,7 +30,11 @@
 							<!-- <li><a href="/auth/register">Sign up</a></li> -->
 						<% } else { %>
 							<li><a href="">Welcome <%= user.userinfo.given_name %></a></li>
-							<li><a href="/auth/logout">Logout</a></li>
+							<li></li>
+								<form method="post" action="/auth/logout">
+									<button id="logout-button" type="submit">Logout</button>
+								</form>
+							</li>
 						<% } %>
 					</ul>
 				</div>

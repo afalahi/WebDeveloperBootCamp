@@ -12,7 +12,7 @@ router.use( oidc.ensureAuthenticated(), isAdmin)
 /* GET users listing. */
 router.get('/', (req, res, next) => {
   rp.get({
-    uri: `https://dev-451953.oktapreview.com/api/v1/apps/${process.env.CLIENT_ID}/users`,
+    uri: `https://login.isengard.us/api/v1/apps/${process.env.CLIENT_ID}/users`,
     json:true,
     headers: {Authorization: `SSWS ${process.env.OKTA_TOKEN}`}
   }).then(results => {
@@ -29,7 +29,7 @@ router.get('/', (req, res, next) => {
 
 router.get("/new", (req, res, next) => {
   rp.get({
-    uri: `https://dev-451953.oktapreview.com/api/v1/apps/${process.env.CLIENT_ID}/groups`,
+    uri: `https://login.isengard.us/api/v1/apps/${process.env.CLIENT_ID}/groups`,
     json:true,
     headers: {Authorization: `SSWS ${process.env.OKTA_TOKEN}`}
   }).then(groups => {
@@ -37,7 +37,7 @@ router.get("/new", (req, res, next) => {
     let promises = [];
     [...groups].forEach(group => {
       promises.push(rp.get({
-        uri: `https://dev-451953.oktapreview.com/api/v1/groups/${group.id}`,
+        uri: `https://login.isengard.us/api/v1/groups/${group.id}`,
         json: true,
         headers: {Authorization: `SSWS ${process.env.OKTA_TOKEN}`}
       }))
@@ -58,14 +58,14 @@ router.get("/new", (req, res, next) => {
 router.post("/", (req, res, next) => {
   req.body.user.profile.login = req.body.user.profile.email;
   rp.post({
-    uri: `https://dev-451953.oktapreview.com/api/v1/users`,
+    uri: `https://login.isengard.us/api/v1/users`,
     headers: {Authorization: `SSWS ${process.env.OKTA_TOKEN}`, "content-type": "application/json", accept:"application/json"},
     body: req.body.user,
     json: true
   }).then(results => {
     [...req.body.groups].forEach(group =>{
       rp.put({
-        uri: `https://dev-451953.oktapreview.com/api/v1/groups/${group}/users/${results.id}`,
+        uri: `https://login.isengard.us/api/v1/groups/${group}/users/${results.id}`,
         headers: {Authorization: `SSWS ${process.env.OKTA_TOKEN}`, "content-type": "application/json", accept:"application/json"},
         json:true
       }).then(() => {
@@ -81,12 +81,12 @@ router.post("/", (req, res, next) => {
 
 router.get("/:id", (req, res, next) => {
   rp.get({
-    uri: `https://dev-451953.oktapreview.com/api/v1/apps/${process.env.CLIENT_ID}/users/${req.params.id}`,
+    uri: `https://login.isengard.us/api/v1/apps/${process.env.CLIENT_ID}/users/${req.params.id}`,
     json:true,
     headers: {Authorization: `SSWS ${process.env.OKTA_TOKEN}`}
   }).then(results => {
     rp.get({
-      uri: `https://dev-451953.oktapreview.com/api/v1/users/${req.params.id}/groups`,
+      uri: `https://login.isengard.us/api/v1/users/${req.params.id}/groups`,
       json:true,
       headers: {Authorization: `SSWS ${process.env.OKTA_TOKEN}`}
     }).then(groups => {
@@ -99,7 +99,7 @@ router.get("/:id", (req, res, next) => {
 
 router.get("/:id/edit", (req, res, next) => {
   rp.get({
-    uri: `https://dev-451953.oktapreview.com/api/v1/apps/${process.env.CLIENT_ID}/users/${req.params.id}`,
+    uri: `https://login.isengard.us/api/v1/apps/${process.env.CLIENT_ID}/users/${req.params.id}`,
     json:true,
     headers: {Authorization: `SSWS ${process.env.OKTA_TOKEN}`}
   }).then(results => {
@@ -111,13 +111,13 @@ router.get("/:id/edit", (req, res, next) => {
 
 router.get("/:id/groups", (req, res, next) => {
   rp.get({
-    uri: `https://dev-451953.oktapreview.com/api/v1/users/${req.params.id}/groups`,
+    uri: `https://login.isengard.us/api/v1/users/${req.params.id}/groups`,
     json:true,
     headers: {Authorization: `SSWS ${process.env.OKTA_TOKEN}`}
   })
   .then(currentGroups => {
     rp.get({
-      uri: `https://dev-451953.oktapreview.com/api/v1/apps/${process.env.CLIENT_ID}/groups`,
+      uri: `https://login.isengard.us/api/v1/apps/${process.env.CLIENT_ID}/groups`,
       json:true,
       headers: {Authorization: `SSWS ${process.env.OKTA_TOKEN}`}
     })
@@ -133,7 +133,7 @@ router.get("/:id/groups", (req, res, next) => {
       let promises = [];
       [...results].forEach(result =>{
         promises.push(rp.get({
-          uri: `https://dev-451953.oktapreview.com/api/v1/groups/${result.id}`,
+          uri: `https://login.isengard.us/api/v1/groups/${result.id}`,
           json: true,
           headers: {Authorization: `SSWS ${process.env.OKTA_TOKEN}`}
         }))
@@ -152,7 +152,7 @@ router.get("/:id/groups", (req, res, next) => {
 
 router.put("/:id", (req, res, next) => {
   rp.post({
-    uri: `https://dev-451953.oktapreview.com/api/v1/apps/${process.env.CLIENT_ID}/users/${req.params.id}`,
+    uri: `https://login.isengard.us/api/v1/apps/${process.env.CLIENT_ID}/users/${req.params.id}`,
     json:true,
     headers: {Authorization: `SSWS ${process.env.OKTA_TOKEN}`},
     body: req.body.user
@@ -165,7 +165,7 @@ router.put("/:id", (req, res, next) => {
 
 router.put("/:id", (req, res, next) => {
   rp.post({
-    uri: `https://dev-451953.oktapreview.com/api/v1/apps/${process.env.CLIENT_ID}/users/${req.params.id}`,
+    uri: `https://login.isengard.us/api/v1/apps/${process.env.CLIENT_ID}/users/${req.params.id}`,
     json:true,
     headers: {Authorization: `SSWS ${process.env.OKTA_TOKEN}`},
     body: req.body.user
@@ -178,12 +178,12 @@ router.put("/:id", (req, res, next) => {
 
 router.delete("/:id", (req, res, next) =>{
   rp.delete({
-    uri: `https://dev-451953.oktapreview.com/api/v1/users/${req.params.id}`,    
+    uri: `https://login.isengard.us/api/v1/users/${req.params.id}`,    
     json:true,
     headers: {Authorization: `SSWS ${process.env.OKTA_TOKEN}`}
   }).then(() => {
     rp.delete({
-      uri: `https://dev-451953.oktapreview.com/api/v1/users/${req.params.id}`,    
+      uri: `https://login.isengard.us/api/v1/users/${req.params.id}`,    
       json:true,
       headers: {Authorization: `SSWS ${process.env.OKTA_TOKEN}`}
     }).then(() => {

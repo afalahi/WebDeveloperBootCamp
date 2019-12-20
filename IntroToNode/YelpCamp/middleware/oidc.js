@@ -3,7 +3,7 @@ const ExpressOIDC = require('@okta/oidc-middleware').ExpressOIDC;
 const rp = require('request-promise')
 const moment = require('moment');
 const oidc = new ExpressOIDC({
-  issuer:"https://dev-451953.oktapreview.com/oauth2/default",
+  issuer:"https://login.isengard.us/oauth2/default",
   client_id: process.env.CLIENT_ID,
   client_secret: process.env.CLIENT_SECRET,
   redirect_uri: "http://localhost/auth/callback",
@@ -12,7 +12,7 @@ const oidc = new ExpressOIDC({
     login: {
       path: '/auth/login',
       viewHandler: (req, res, next) => {
-        const baseUrl =  "https://dev-451953.oktapreview.com"
+        const baseUrl =  "https://login.isengard.us"
         res.render('auth/login', {
           csrfToken: req.csrfToken(),
           baseUrl: baseUrl
@@ -22,15 +22,16 @@ const oidc = new ExpressOIDC({
     callback: {
       path: '/auth/callback',
       handler: (req, res, next) => {
+        console.log(req.userContext)
         rp.get({
-          uri: `https://dev-451953.oktapreview.com/api/v1/apps/${process.env.CLIENT_ID}/users/${req.userContext.userinfo.sub}`,
+          uri: `https://login.isengard.us/api/v1/apps/${process.env.CLIENT_ID}/users/${req.userContext.userinfo.sub}`,
           json:true,
           headers: {Authorization: `SSWS ${process.env.OKTA_TOKEN}`},
         }).then(results => {
           // let lastLogin = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '')
           let weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
           rp.post({
-            uri: `https://dev-451953.oktapreview.com/api/v1/apps/${process.env.CLIENT_ID}/users/${results.id}`,
+            uri: `https://login.isengard.us/api/v1/apps/${process.env.CLIENT_ID}/users/${results.id}`,
             json:true,
             headers: {Authorization: `SSWS ${process.env.OKTA_TOKEN}`},
             body: {profile: {
@@ -45,8 +46,13 @@ const oidc = new ExpressOIDC({
           res.redirect('/campgrounds')
         })
       },
+      // afterCallback: '/campgrounds'
       // defaultRedirect: '/campgrounds'
+    },
+    logout: {
+      path: '/auth/logout'
     }
+
   }
 });
 

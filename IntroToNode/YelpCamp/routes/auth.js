@@ -5,7 +5,7 @@ const clsFlash = require('../middleware/clsflash');
 const okta = require('@okta/okta-sdk-nodejs');
 
 const client = new okta.Client({
-  orgUrl: "https://dev-451953.oktapreview.com",
+  orgUrl: "https://login.isengard.us",
   token: process.env.OKTA_TOKEN
 })
 const options = {
@@ -106,11 +106,11 @@ router
   //     });
   //   })(req, res, next);
   // })
-  .get('/logout', (req, res) => {
-    req.logOut();
-    req.flash('info', 'You logged out');
-    res.redirect('/');
-  });
+  // .post('/logout', (req, res) => {
+  //   req.logOut();
+  //   req.flash('info', 'You logged out');
+  //   res.redirect('/');
+  // });
 //if user is already logged in redirect back
 function isLoggedIn(req, res, next) {
   if (!req.userContext) {
