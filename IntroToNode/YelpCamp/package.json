@@ -24,7 +24,7 @@
     "express-session": "^1.15.6",
     "flash": "^1.1.0",
     "helmet": "^3.21.2",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "method-override": "^3.0.0",
     "moment": "^2.23.0",
     "mongodb": "^3.4.1",
