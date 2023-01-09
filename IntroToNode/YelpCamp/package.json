@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "@okta/jwt-verifier": "^1.0.0",
-    "@okta/oidc-middleware": "^1.0.2",
+    "@okta/oidc-middleware": "^5.0.0",
     "@okta/okta-sdk-nodejs": "^3.1.0",
     "@types/bootstrap": "^3.3.36",
     "@types/ejs": "^2.5.0",
